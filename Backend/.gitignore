@@ -1,13 +1,4 @@
-
-/Backend/node_modules
+.env
                 node_modules
                 .env
-                .env.local
-                .env.example
-                .env.test
-                .env.development
-                .env.production
-                .env.test.local
-                .env.development.local
-                .env.production.local
                 

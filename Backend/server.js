@@ -6,7 +6,8 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import errorHandler from "./middleware/errorHandler/js";
+import errorHandler from "./middleware/errorHandler.js";
+import connectDB from "./config/db.js";
 
 
 //* Es6 module __dir  alteratives 
@@ -54,7 +55,7 @@ app.use((req,res)=>{
 const PORT = process.env.PORT || 8000;
 app.listen(PORT,()=>console.log(`Server running on port ${PORT}`));
 
-procss.on(unhandledRejection,(err)=>{
+process.on('unhandledRejection',(err)=>{
     console.log(`Error: ${err.message}`);
     process.exit(1);
 })
