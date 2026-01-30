@@ -30,7 +30,7 @@ import FlashcardsListPage from './pages/Flashcards/FlashcardsListPage'
         <Route path='/register' element={<Register />} />
 
 
-        {/* Protected routes */}
+        {/* *Protected routes */}
         <Route element={<ProtectedRoute />}>
         <Route path='/dashboard' element={<Dashboard/>} />
         <Route path='/documents' element={<DocumentListPage />} />
