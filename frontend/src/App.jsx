@@ -1,26 +1,52 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import Login from './pages/Login'
-          const App = () => {
-  const isAuthenticated=false;
-  const loading =false
-  if(loading){
-    return(
-      <div className=''>
+import Login from './pages/Auth/LoginPage'
+import Register from './pages/Auth/RegisterPage'
+import NotFoundPage from './pages/NotFoundPage'
+import ProtectedRoute from './components/auth/ProtectedRoute'
+import Dashboard from './pages/Dashboard/DashboardPage'
+import DocumentListPage from './pages/Documents/DocumentListPage'
+import DocumentDetailPage from './pages/Documents/DocumentDetailPage'
+import QuizTakePage from './pages/Quizzes/QuizTakePage'
+import QuizResultPage from './pages/Quizzes/QuizResultPage'
+import ProfilePage from './pages/Profile/ProfilePage'
+import FlashCardPage from './pages/Flashcards/FlashcardPage'
+import FlashcardsListPage from './pages/Flashcards/FlashcardsListPage'
+  const App = () => {
+  const isAuthenticated = false;
+  const loading = false
+  if (loading) {
+    return (
+      <div className='flexiten-centerjustify-center h-screen'>
         <p>Loading...</p>
       </div>
     )
   }
-  return(
+  return (
     <Router>
       <Routes>
-<Route  path='/' element={isAuthenticated? <Navigate to="/dashboard" replace/> :<Navigate to="/login" replace />}/>
-<Route path='/login' element={<Login/>} />
-<Route path='/register' element={<Register/>} />
+        <Route path='/' element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+
+
+        {/* Protected routes */}
+        <Route element={<ProtectedRoute />}>
+        <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path='/documents' element={<DocumentListPage />} />
+        <Route path='/documents/:id' element={<DocumentDetailPage />} />
+        <Route path='/flashcards' element={<FlashcardsListPage/>} />
+        <Route path='/documents/:id/flashcards' element={<FlashCardPage />} />
+        <Route path='/quizzes/:quizId' element={<QuizTakePage />} />
+        <Route path='/quizzes/:quizId/results' element={<QuizResultPage />} />
+        <Route path='/profile' element={<ProfilePage />} />
+        </Route>
+
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>
   )
 
-  }
+}
 
 export default App
