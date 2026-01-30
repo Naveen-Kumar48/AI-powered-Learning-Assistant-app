@@ -47,6 +47,40 @@ export const register = async (req, res,next) => {
 }
 
 
+//@desc Get user profile
+//@route GET /api/auth/profile
+//@access Private
 
 
 
+export const getProfile = async (req, res,next) => {
+  try{
+
+  }catch(error){
+
+  }
+}
+
+//@desc Update user profile
+//@route PUT /api/auth/update-profile
+//@access Private
+
+export const updateProfile = async (req, res,next) => {
+  try{
+
+  }catch(error){
+
+  }
+}
+
+//@desc change password
+//@route PUT /api/auth/change-password
+//@access Private
+
+export const changepassword = async (req, res,next) => {
+  try{
+
+  }catch(error){
+
+  }
+}
