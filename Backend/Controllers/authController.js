@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import User from '../models/User.js'
 
 
 
@@ -20,10 +20,7 @@ const generateToken = (user) => {
 //@access Public
 export const register = async (req, res,next) => {
     try {
-        const { username, email, password } = req.body;
-        if (!username || !email || !password) {
-            return res.status(400).json({ success: false, message: 'All fields are required' });
-        }
+       
         
     } catch (error) {
         next(error)
@@ -36,10 +33,7 @@ export const register = async (req, res,next) => {
 
  export const   login = async (req, res,next) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ success: false, message: 'All fields are required' });
-        }
+        
         
     } catch (error) {
         next(error)
@@ -77,7 +71,7 @@ export const updateProfile = async (req, res,next) => {
 //@route PUT /api/auth/change-password
 //@access Private
 
-export const changepassword = async (req, res,next) => {
+export const changePassword = async (req, res,next) => {
   try{
 
   }catch(error){
