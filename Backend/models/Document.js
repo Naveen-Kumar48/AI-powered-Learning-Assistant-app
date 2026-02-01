@@ -56,7 +56,7 @@ const documentSchema = new mongoose.Schema({
 })
 
 
-//*index for faste access
+//*index for faster access
 documentSchema.index({userId:1,uploadDate:-1})
 
 const Document = mongoose.model('Document', documentSchema)

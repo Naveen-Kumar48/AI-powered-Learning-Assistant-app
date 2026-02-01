@@ -7,6 +7,7 @@ import {
     updateProfile,
     changePassword
 } from '../Controllers/authController.js'
+import  updateProfileValidation from "../middleware/errorHandler.js"
 
 import protect from '../middleware/auth.js'
 

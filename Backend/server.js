@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -36,7 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-// static forlder for te uploads
+//* static forlder for te uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
@@ -54,10 +53,19 @@ app.use((req,res)=>{
 })  
 
 // server start 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT,()=>console.log(`Server running on port ${PORT}`));
 
 process.on('unhandledRejection',(err)=>{
     console.log(`Error: ${err.message}`);
     process.exit(1);
 })
+
+
+
+
+
+
+
+//* code to generate the secrete key
+//  &node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
