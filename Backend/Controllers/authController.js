@@ -92,7 +92,7 @@ export const login = async (req, res, next) => {
         statusCode: 401,
       });
     }
-    //* generate token
+    //* Generate token
     const token = generateToken(user._id);
 
     res.status(200).json({
@@ -163,9 +163,9 @@ export const updateProfile = async (req, res, next) => {
   }
 };
 
-//*@desc change password
-//*@route POST /api/auth/change-password
-//*@access Private
+//~@desc change password
+//~@route POST /api/auth/change-password
+//~@access Private
 
 export const changePassword = async (req, res, next) => {
   try {

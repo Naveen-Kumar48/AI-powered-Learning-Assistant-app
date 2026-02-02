@@ -1,38 +1,56 @@
 import Document from "../models/Document.js";
 import User from "../models/User.js";
+import Flashcard from "../models/Flashcard.js";
+import Quiz from "../models/Quiz.js";
+import { extractTextFromPDF } from "..//utils/pdfParse.js";
+import { chunkText } from "../utils/textChunker.js";
+import fs from "fs/promises";
+import mongoose from "mongoose";
 import { uploadFile } from "../utils/fileHandler.js";
 
-
-
-//*@desc upload document
+//*@desc upload PDF document
 //*@route POST /api/documents/upload
 //*@access Private
 
 export const uploadDocument = async (req, res, next) => {
-    try {
-        const file = req.file;
-        if (!file) {
-            return res.status(400).json({
-                success: false,
-                error: "No file uploaded",
-                statusCode: 400,
-            });
-        }
-        const result = await uploadFile(file);
-        const document = await Document.create({
-            user: req.user.id,
-            title: file.originalname,
-            fileUrl: result.url,
-            fileKey: result.key,
-            fileType: file.mimetype,
-            fileSize: file.size,
-        });
-        res.status(201).json({
-            success: true,
-            data: document,
-            statusCode: 201,
-        });
-    } catch (error) {
-        next(error);
+  try {
+  } catch (error) {
+    // clean up file on the error
+    if (req.file) {
+      await fs.unlink(req.file.path).catch(() => {});
     }
+    next(error);
+  }
 };
+//*desc Get  all user documents
+//*@routes Get /api/documents
+//*@ access Private
+export const getDocuments = async (req, res, next) => {
+
+};
+
+//*@desc  Get single document with chunks
+//* @routes Get /api/document/:id
+//*@access  Private 
+
+export const getDocument=async(req,res,next)=>{
+
+
+}
+
+//*desc Delete document 
+//* @route Delete /api/documents/:id
+//* access Private 
+
+export const deleteDocument= async(req,res,next)=>{
+
+}
+
+//*desc Update document 
+//* @route Put /api/documents/:id
+//*@access Private
+export const updateDocument=async(req,res,next)=>{
+
+}
+
+
