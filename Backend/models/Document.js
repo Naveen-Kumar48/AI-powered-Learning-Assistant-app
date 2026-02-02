@@ -8,7 +8,7 @@ const documentSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        required: [true, 'please provide a valid title'],
+        required: [true, 'Please provide a document title'],
         trim: true
     },
     fileName: {
@@ -16,12 +16,16 @@ const documentSchema = new mongoose.Schema({
         required: true,
     },
     filePath: {
+        type: String,
+        required: true,
+    },
+    fileSize: {
         type: Number,
         required: true,
     },
     extractedText: {
         type: String,
-        default: "   "
+        default: ""
     }, chunks: [
         {
             content: {
@@ -39,7 +43,7 @@ const documentSchema = new mongoose.Schema({
         }
     ],
     uploadDate: {
-        type: Date,
+        type:Date,
         default: Date.now
     },
     lastAccessed: {
@@ -51,8 +55,8 @@ const documentSchema = new mongoose.Schema({
         enum: ["processing", "ready", "failed"],
         default: "processing"
     }
-},{
-    timestamps:true
+}, {
+    timestamps: true
 })
 
 

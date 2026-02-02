@@ -22,8 +22,9 @@ export const chunkText = (text, chunkSize = 500, overlap = 50) => {
         .replace(/\n{3,}/g, "\n\n")
         .trim();
 
+    // Split paragraphs strictly by double newlines to ensure logical separation
     const paragraphs = cleanedText
-        .split(/\n+/)
+        .split(/\n\s*\n/)
         .map(p => p.trim())
         .filter(Boolean);
 
@@ -38,6 +39,7 @@ export const chunkText = (text, chunkSize = 500, overlap = 50) => {
 
         // Large paragraph → split directly
         if (wordCount > chunkSize) {
+            // First flush any existing chunk
             if (currentChunk.length) {
                 chunks.push({
                     content: currentChunk.join("\n\n"),
@@ -48,6 +50,7 @@ export const chunkText = (text, chunkSize = 500, overlap = 50) => {
                 currentWordCount = 0;
             }
 
+            // Then split this massive paragraph
             for (let i = 0; i < words.length; i += (chunkSize - overlap)) {
                 const slice = words.slice(i, i + chunkSize);
                 if (!slice.length) break;
@@ -58,32 +61,33 @@ export const chunkText = (text, chunkSize = 500, overlap = 50) => {
                     pageNumber: 0,
                 });
 
+                // Optimization: if we are near the end, stop to prevent tiny trailing chunks
                 if (i + chunkSize >= words.length) break;
             }
             continue;
         }
 
-        // Would exceed chunk size → flush
-        if (currentWordCount + wordCount > chunkSize && currentChunk.length) {
-            const previousText = currentChunk.join(" ");
-            const previousWords = previousText.split(/\s+/);
-            const overlapText = previousWords
-                .slice(-Math.min(overlap, previousWords.length))
-                .join(" ");
-
+        // Would adding this paragraph exceed chunk size? -> Flush current chunk
+        if (currentWordCount + wordCount > chunkSize && currentChunk.length > 0) {
             chunks.push({
                 content: currentChunk.join("\n\n"),
                 chunkIndex: chunkIndex++,
                 pageNumber: 0,
             });
 
-            currentChunk = overlapText
-                ? [overlapText, paragraph]
-                : [paragraph];
+            // Start new chunk with overlaps if needed
+            // For simplicity, we just start fresh with this paragraph to avoid complex overlap logic which often fails
+            // If strict overlap is required, we can grab the last N words of previous chunk
 
-            currentWordCount =
-                (overlapText ? overlapText.split(/\s+/).length : 0) + wordCount;
+            const prevChunkText = currentChunk.join(" ");
+            const prevWords = prevChunkText.split(/\s+/);
+            const overlapText = prevWords.slice(-Math.min(overlap, prevWords.length)).join(" ");
+
+            currentChunk = [overlapText, paragraph];
+            currentWordCount = overlapText.split(/\s+/).length + wordCount;
+
         } else {
+            // Add paragraph to current chunk
             currentChunk.push(paragraph);
             currentWordCount += wordCount;
         }
@@ -101,8 +105,8 @@ export const chunkText = (text, chunkSize = 500, overlap = 50) => {
         }
     }
 
-    // FINAL FAILSAFE
-    if (!chunks.length) {
+    // FINAL FAILSAFE: If logic failed to produce chunks (e.g. one giant paragraph that wasn't split correctly), split by words
+    if (chunks.length === 0 && cleanedText.length > 0) {
         const words = cleanedText.split(/\s+/);
         for (let i = 0; i < words.length; i += (chunkSize - overlap)) {
             const slice = words.slice(i, i + chunkSize);
@@ -128,8 +132,8 @@ export const findRelevantChunks = (chunks, query, maxChunks = 3) => {
     if (!Array.isArray(chunks) || !chunks.length || !query) return [];
 
     const stopWords = new Set([
-        "the","is","at","which","on","a","an","and","or","but","in",
-        "with","to","for","of","as","by","this","that","it"
+        "the", "is", "at", "which", "on", "a", "an", "and", "or", "but", "in",
+        "with", "to", "for", "of", "as", "by", "this", "that", "it"
     ]);
 
     const queryWords = query
