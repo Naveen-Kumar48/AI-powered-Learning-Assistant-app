@@ -1,1 +1,19 @@
-import express from 'express'
+import express from "express";
+import {
+  getFlashcards,
+  getAllFlashcardSets,
+  reviewFlashcard,
+  toggleStarFlashcard,
+  deleteFlashcardSets
+} from "../Controllers/flashcardController";
+import protect from "../middleware/auth.js";
+const router = express.Router();
+router.use(protect);
+
+router.get("/", getAllFlashcardSets);
+router.get("/:documentId",getFlashcards);
+router.post("/:cardId/review",reviewFlashcard);
+router.put('/:cardId/star',toggleStarFlashcard)
+router.delete("/:id",deleteFlashcardSets)
+
+export default router
