@@ -46,7 +46,7 @@ const documentSchema = new mongoose.Schema({
         type:Date,
         default: Date.now
     },
-    lastAccessed: {
+    lastAccessedAt:{
         type: Date,
         default: Date.now
     },

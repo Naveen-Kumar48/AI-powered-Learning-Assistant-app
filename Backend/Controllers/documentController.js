@@ -71,7 +71,7 @@ const processPDF = async (documentId, filePath) => {
   try {
     const { text } = await extractTextFromPDF(filePath)
     //creating chunks
-    const chunks = chunkText(text, 500, 50)
+    const chunks = chunkText(text,500,50)
     //update document status
     await Document.findByIdAndUpdate(documentId, {
       extractedText: text,
@@ -146,6 +146,35 @@ export const getDocuments = async (req, res, next) => {
 
 export const getDocument = async (req, res, next) => {
   try {
+const document=await Document.findOne({
+  _id:req.params.id,
+  userId:req.user._id
+})
+if(!document){
+  return res.status(404).json({
+    success:false, 
+    message:"Document not found",
+    statusCode:404,
+  })
+
+}
+
+
+//Get count of Associated flashcards and quizzes
+const flashcardCount=await Flashcard.countDocuments({documentId:document._id,userId:req.user._id})
+const quizCount=await Quiz.countDocuments({documentId:document._id,userId:req.user._id})
+
+//update the last accessed time
+document.lastAccessedAt=new Date()
+await document.save()
+
+//combinign document with flashcard and quiz count
+const combinedDocument={
+  ...document.toObject(),
+  flashcardCount,
+  quizCount
+}
+
 
   } catch (error) {
 
