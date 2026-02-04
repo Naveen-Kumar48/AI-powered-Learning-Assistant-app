@@ -5,7 +5,7 @@ import {
   reviewFlashcard,
   toggleStarFlashcard,
   deleteFlashcardSets
-} from "../Controllers/flashcardController";
+} from "../Controllers/flashcardController.js";
 import protect from "../middleware/auth.js";
 const router = express.Router();
 router.use(protect);
