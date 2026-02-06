@@ -103,7 +103,7 @@ export const toggleStarFlashcard = async (req, res, next) => {
         success:false,
         message:'Card not found in the set'
     })
-   }//toggling the star 
+   }//*toggling the star 
    flashcardSet.cards[cardIndex].isStarred=!flashcardSet.cards[cardIndex].isStarred;
    await flashcardSet.save();
    res.status(200).json({
