@@ -10,6 +10,7 @@ getChatHistory
 import protect from "../middleware/auth.js";
 const router=express.Router();
 router.use(protect);
+
 router.post("/generate-flashcard",generateFlashcards);
 router.post("/generate-quiz",generateQuiz);
 router.post('/generate-summary',generateSummary);
