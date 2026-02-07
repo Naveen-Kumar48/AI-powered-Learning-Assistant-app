@@ -10,6 +10,7 @@ import { findRelevantChunks } from "../utils/textChunker.js";
 //* @access private
 export const generateFlashcards = async (req, res, next) => {
   try {
+    // *comment add the  git hub
   } catch (error) {
     next(error);
   }
