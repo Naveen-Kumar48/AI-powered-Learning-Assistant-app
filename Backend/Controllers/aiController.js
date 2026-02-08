@@ -1,4 +1,4 @@
-import  Document  from "../models/Document.js";
+import Document from "../models/Document.js";
 import Flashcard from "../models/Flashcard.js";
 import Quiz from "../models/Quiz.js";
 import ChatHistory from "../models/ChatHistory.js";
@@ -10,7 +10,6 @@ import { findRelevantChunks } from "../utils/textChunker.js";
 //* @access private
 export const generateFlashcards = async (req, res, next) => {
   try {
-   
   } catch (error) {
     next(error);
   }
@@ -20,7 +19,7 @@ export const generateFlashcards = async (req, res, next) => {
 //* @access Private
 export const generateQuiz = async (req, res, next) => {
   try {
-  } catch (error) {
+  } catch (error) {s
     next(error);
   }
 };
@@ -57,14 +56,12 @@ export const explainConcept = async (req, res, next) => {
   }
 };
 
-//*desc  Get chat  history  for a document 
+//*desc  Get chat  history  for a document
 //* routes  Get /api/ai/chat-history/:documentId
-//* access Private  
-export const getChatHistory=async(req,res,next)=>{
-try {
-  
-} catch (error) {
-  next(error)
-  
-}
-}
+//* access Private
+export const getChatHistory = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
