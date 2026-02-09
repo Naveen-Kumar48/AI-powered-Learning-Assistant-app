@@ -10,6 +10,45 @@ import { findRelevantChunks } from "../utils/textChunker.js";
 //* @access private
 export const generateFlashcards = async (req, res, next) => {
   try {
+    const { documentId, count = 10 } = req.body;
+
+    if (!documentId) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide  documentId",
+        statusCode: 400,
+      });
+    }
+    const document = await Document.findOne({
+      _id: documentId,
+      userId: req.user._id,
+      status: "ready",
+    });
+    if(!document){
+      return res.status(404).json({
+        success:false,
+        error:"Document not found  or  not ready  ",
+        statusCode:404 
+      })
+
+    }
+    //* generate the flashcard using the gemini 
+    const cards = await geminiService.generateFlashcards(
+      document.extractedText,
+      parseInt(count)
+    );
+    //*save the database
+    const  flashcardSet=await Flashcard.create({
+      userId:req.user._id,
+      documentId:document._id,
+      cards:cards.map(card=>({
+        question:card.question,
+        answer:card.answer ,
+        difficulty:card.difficulty,
+        reviewCount:0,
+        isStarred:false
+      }))
+    })
   } catch (error) {
     next(error);
   }
@@ -19,7 +58,8 @@ export const generateFlashcards = async (req, res, next) => {
 //* @access Private
 export const generateQuiz = async (req, res, next) => {
   try {
-  } catch (error) {s
+  } catch (error) {
+    s;
     next(error);
   }
 };
