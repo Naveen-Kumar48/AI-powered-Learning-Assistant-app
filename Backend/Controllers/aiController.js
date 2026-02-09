@@ -24,31 +24,35 @@ export const generateFlashcards = async (req, res, next) => {
       userId: req.user._id,
       status: "ready",
     });
-    if(!document){
+    if (!document) {
       return res.status(404).json({
-        success:false,
-        error:"Document not found  or  not ready  ",
-        statusCode:404 
-      })
-
+        success: false,
+        error: "Document not found  or  not ready  ",
+        statusCode: 404,
+      });
     }
-    //* generate the flashcard using the gemini 
+    //* generate the flashcard using the gemini
     const cards = await geminiService.generateFlashcards(
       document.extractedText,
-      parseInt(count)
+      parseInt(count),
     );
     //*save the database
-    const  flashcardSet=await Flashcard.create({
-      userId:req.user._id,
-      documentId:document._id,
-      cards:cards.map(card=>({
-        question:card.question,
-        answer:card.answer ,
-        difficulty:card.difficulty,
-        reviewCount:0,
-        isStarred:false
-      }))
-    })
+    const flashcardSet = await Flashcard.create({
+      userId: req.user._id,
+      documentId: document._id,
+      cards: cards.map((card) => ({
+        question: card.question,
+        answer: card.answer,
+        difficulty: card.difficulty,
+        reviewCount: 0,
+        isStarred: false,
+      })),
+    });
+    res.status(201).json({
+      success: true,
+      data: flashcardSet,
+      message: "flashcards generated successfully",
+    });
   } catch (error) {
     next(error);
   }

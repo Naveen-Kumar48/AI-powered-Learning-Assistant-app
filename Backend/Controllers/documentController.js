@@ -1,5 +1,4 @@
 import Document from "../models/Document.js";
-import User from "../models/User.js";
 import Flashcard from "../models/Flashcard.js";
 import Quiz from "../models/Quiz.js";
 import { extractTextFromPDF } from "../utils/pdfParse.js";
