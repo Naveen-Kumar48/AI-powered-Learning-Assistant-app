@@ -8,7 +8,7 @@ const quizSchema = new mongoose.Schema({
     },
     documentId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'QuizData',
+        ref: 'Document',
         required: true
     },
     title: {
@@ -73,15 +73,15 @@ const quizSchema = new mongoose.Schema({
         type: Date,
         default: null,
     }
-},{
-    timestamps:true
+}, {
+    timestamps: true
 })
 
 
 //* Index  for faster Queries
 
 
-quizSchema.index({userId:1,documentId:1})
+quizSchema.index({ userId: 1, documentId: 1 })
 const Quiz = mongoose.model('Quiz', quizSchema)
 
 export default Quiz;

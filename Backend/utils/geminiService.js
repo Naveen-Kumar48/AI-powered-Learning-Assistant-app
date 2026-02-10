@@ -77,17 +77,16 @@ ${text.substring(0, 15000)}`;
 */
 export const generateQuiz = async (text, numQuestions = 5) => {
     const prompt = `Generate exactly ${numQuestions} multiple choice questions from the following text.
-Format each question as:
-Q: [Question]
-01: [Option 1]
-02: [Option 2]
-03: [Option 3]
-04: [Option 4]
-C: [Correct option - exactly as written above]
-E: [Brief explanation]
-D: [Difficulty: easy, medium, or hard]
-
-Separate questions with "---"
+Return the output strictly as a JSON array of objects.
+Do not include markdown formatting (like \`\`\`json ... \`\`\`).
+Each object must have the following structure:
+{
+  "question": "The question text",
+  "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+  "correctAnswer": "The correct option text (must match one of the options exactly)",
+  "explanation": "Brief explanation of why the answer is correct",
+  "difficulty": "easy", "medium", or "hard"
+}
 
 Text:
 ${text.substring(0, 15000)}`;
@@ -100,40 +99,29 @@ ${text.substring(0, 15000)}`;
 
         const generatedText = response.text;
 
-        const questions = [];
-        const questionBlocks = generatedText.split(' --- ').filter(q => q.trim());
-
-        for (const block of questionBlocks) {
-            const lines = block.trim().split('\n');
-            let question = '', options = [], correctAnswer = '', explanation = '', difficulty = 'medium';
-
-            for (const line of lines) {
-                const trimmed = line.trim();
-                if (trimmed.startsWith('Q:')) {
-                    question = trimmed.substring(2).trim();
-                } else if (trimmed.match(/^0\d:/)) {
-                    options.push(trimmed.substring(3).trim());
-                } else if (trimmed.startsWith('C:')) {
-                    correctAnswer = trimmed.substring(2).trim();
-                } else if (trimmed.startsWith('E:')) {
-                    explanation = trimmed.substring(2).trim();
-                } else if (trimmed.startsWith('D:')) {
-                    const diff = trimmed.substring(2).trim().toLowerCase();
-                    if (['easy', 'medium', 'hard'].includes(diff)) {
-                        difficulty = diff;
-                    }
-                }
-            }
-
-            if (question && options.length === 4 && correctAnswer) {
-                questions.push({ question, options, correctAnswer, explanation, difficulty });
-            }
+        // Clean up potential markdown formatting if the model disregards the instruction (though JSON mode helps)
+        let jsonString = generatedText.trim();
+        if (jsonString.startsWith('```json')) {
+            jsonString = jsonString.replace(/^```json/, '').replace(/```$/, '').trim();
+        } else if (jsonString.startsWith('```')) {
+            jsonString = jsonString.replace(/^```/, '').replace(/```$/, '').trim();
         }
 
-        return questions.slice(0, numQuestions);
+        const questions = JSON.parse(jsonString);
+
+        // Validate structure
+        const validQuestions = questions.filter(q =>
+            q.question &&
+            Array.isArray(q.options) && q.options.length === 4 &&
+            q.correctAnswer &&
+            q.difficulty
+        );
+
+        return validQuestions.slice(0, numQuestions);
 
     } catch (error) {
         console.error('Gemini API error:', error);
+        // Fallback or rethrow
         throw new Error('Failed to generate quiz');
     }
 };
