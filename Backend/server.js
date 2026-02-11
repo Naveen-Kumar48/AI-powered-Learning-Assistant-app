@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -13,6 +14,7 @@ import authRoutes from "./routes/authRoutes.js";
 import documentRoutes  from "./routes/documentRoutes.js";
 import flashcardRoutes from "./routes/flashcardRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
+import quizRoutes from "./routes/quizRoutes.js";
 
 
 
@@ -50,7 +52,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use('/api/auth', authRoutes); 
 app.use('/api/documents',documentRoutes); 
 app.use('/api/flashcard',flashcardRoutes); 
-app.use('/api/ai',aiRoutes); 
+app.use('/api/ai',aiRoutes);
+app.use('/api/quizzes',quizRoutes); 
 app.use(errorHandler);
 
 

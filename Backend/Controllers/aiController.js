@@ -213,22 +213,21 @@ export const chat = async (req, res, next) => {
         role: "assistant",
         content: answer,
         timestamp: new Date(),
-        relevantChunks: chunkIndices
-      }
+        relevantChunks: chunkIndices,
+      },
     );
     //*saving to the db
-     await chatHistory.save();
-     res.status(200).json({
-      success:true,
-      data:{
+    await chatHistory.save();
+    res.status(200).json({
+      success: true,
+      data: {
         question,
         answer,
-        relevantChunks:chunkIndices,
-        chatHistoryId:chatHistory._id
+        relevantChunks: chunkIndices,
+        chatHistoryId: chatHistory._id,
       },
-      message:'Response generated successfully'
-     })
-
+      message: "Response generated successfully",
+    });
   } catch (error) {
     next(error);
   }
@@ -240,6 +239,43 @@ export const chat = async (req, res, next) => {
 
 export const explainConcept = async (req, res, next) => {
   try {
+    const{documentId,concept}=req.body;
+    if (!documentId || !concept) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide  documentId and concept ",
+        statusCode: 400,
+      });
+    }
+    const document = await Document.findOne({
+      _id: documentId,
+      userId: req.user._id,
+      status: "ready",
+    });
+
+    if (!document) {
+      return res.status(404).json({
+        success: false,
+        error: "Document not Found or not ready",
+        statusCode: 404,
+      });
+    }
+
+    //*Find relevant chunks for the concept
+    const relevantChunks = findRelevantChunks(document.chunks, concept, 3);
+    const context = relevantChunks.map((c) => c.content).join("\n\n");
+
+    //*Generate the explanation using the gemini
+    const explanation = await geminiService.explainConcept(concept, context);
+    res.status(200).json({
+      success: true,
+      data: {
+        concept,
+        explanation,
+        relevantChunks: relevantChunks.map((c) => c.chunkIndex),
+      },
+      message: "Explanation generated Successfully",
+    });
   } catch (error) {
     next(error);
   }
@@ -250,6 +286,30 @@ export const explainConcept = async (req, res, next) => {
 //* access Private
 export const getChatHistory = async (req, res, next) => {
   try {
+    const { documentId } = req.params;
+    if (!documentId) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide  document Id",
+        statusCode: 400
+      });
+    }
+    const chatHistory = await ChatHistory.findOne({
+      userId: req.user._id,
+      documentId: documentId,
+    }).select("messages"); //*only retrive the messages array
+    if(!chatHistory){
+      return res.status(200).json({
+        success:true,
+        data:[],//*Return  an empty array if no chat history found 
+        message:'No chat history found for this document '
+      })
+    }
+    res.status(200).json({
+      success:true,
+      data:chatHistory.messages,
+      message:'No chat Retrieved successfully'
+    })
   } catch (error) {
     next(error);
   }
