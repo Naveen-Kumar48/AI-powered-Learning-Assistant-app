@@ -19,7 +19,7 @@ const registerValidation = [
 ]
 
 const updateProfileValidation = [
-    body('username').optional().trim().isLength({ min: 3 }).withMessage('Username must be at least 3 characters long'),
+    body('username').optional().trim().isLength({ min:3}).withMessage('Username must be at least 3 characters long'),
     body('email').optional().trim().isEmail().withMessage('Invalid email').normalizeEmail(),
 ]
 
