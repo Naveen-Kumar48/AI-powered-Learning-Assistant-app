@@ -112,7 +112,7 @@ export const generateQuiz = async (req, res, next) => {
 //*route  POST/api/ai/generate-summary
 //*@access  Private
 
-export const generateSummary = async (req, res, next) => {
+export const generateSummary = async(req,res,next) => {
   try {
     const { documentId } = req.body;
 
@@ -145,7 +145,7 @@ export const generateSummary = async (req, res, next) => {
         title: document.title,
         summary,
       },
-      message: "Summary is generated Success fully",
+      message: "Summary is Generated Success fully",
     });
   } catch (error) {
     next(error);
@@ -216,15 +216,15 @@ export const chat = async (req, res, next) => {
         relevantChunks: chunkIndices,
       },
     );
-    //*saving to the db
+    //*saving   the data to db
     await chatHistory.save();
     res.status(200).json({
       success: true,
       data: {
         question,
         answer,
-        relevantChunks: chunkIndices,
-        chatHistoryId: chatHistory._id,
+        relevantChunks:chunkIndices,
+        chatHistoryId:chatHistory._id,
       },
       message: "Response generated successfully",
     });
@@ -290,7 +290,7 @@ export const getChatHistory = async (req, res, next) => {
     if (!documentId) {
       return res.status(400).json({
         success: false,
-        error: "Please provide  document Id",
+        error: "Please provide  documentId",
         statusCode: 400
       });
     }
