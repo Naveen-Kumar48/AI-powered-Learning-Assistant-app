@@ -33,8 +33,8 @@ export const getQuizById = async (req, res, next) => {
   }
 };
 
-// *@desc    Submit quiz answers
-// *@route   POST /api/quizzes/:id/submit
+// *@desc   Submit quiz answers
+// *@route   POST/api/quizzes/:id/submit
 // *@access  Private
 export const submitQuiz = async (req, res, next) => {
   try {
