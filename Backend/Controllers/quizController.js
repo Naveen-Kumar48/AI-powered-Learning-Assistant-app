@@ -5,12 +5,17 @@ import Quiz from "../models/Quiz.js";
 //* @access  Private
 export const getQuizzes = async (req, res, next) => {
   try {
-    const  quizzes=await Quiz.find({
-      userId:req.user._id,
-      documentId:req.param.documentId
+    const quizzes = await Quiz.find({
+      userId: req.user._id,
+      documentId: req.param.documentId,
     })
-    .populate('documnetId','title fileName ')
-    .sort({creetedAt:-1})
+      .populate("documnetId", "title fileName ")
+      .sort({ creetedAt: -1 });
+    res.status(200).json({
+      success: true,
+      count: quizzes.length,
+      data: quizzes
+    });
   } catch (error) {
     next(error);
   }
