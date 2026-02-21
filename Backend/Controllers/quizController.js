@@ -26,13 +26,20 @@ export const getQuizzes = async (req, res, next) => {
 //* @access  Private
 export const getQuizById = async (req, res, next) => {
   try {
-    const quiz = await Quiz.findById(req.params.id);
-    if (quiz) {
-      res.json(quiz);
-    } else {
-      res.status(404);
-      throw new Error("Quiz not found");
+    const quiz = await Quiz.findById({
+      _id:req.params.id,
+      userId:req.user._id
+    })
+    if(!quiz){
+      return res.status(404).json({
+        success:false,
+        error:'Quiz not found'
+      })
     }
+    res.status(200).json({
+      success:true,
+      data:quiz
+    });
   } catch (error) {
     next(error);
   }
