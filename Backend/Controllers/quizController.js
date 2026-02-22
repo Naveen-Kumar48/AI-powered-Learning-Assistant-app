@@ -87,8 +87,17 @@ export const submitQuiz = async (req, res, next) => {
         const question = quiz.questions[questionIndex];
         const isCorrect = selectedAnswer === question.correctAnswer;
         if (isCorrect) correctCount++;
+        userAnswers.push({
+          questionIndex,
+          selectedAnswer,
+          isCorrect,
+          answeredAt:new  Date()
+
+        })
       }
     });
+    //* Calculating  score  
+    const  score =Math.round()
   } catch (error) {
     next(error);
   }
