@@ -71,7 +71,14 @@ export const submitQuiz = async (req, res, next) => {
         statusCode:404
       })
     }
-    if(quiz)
+    if(quiz.completedAt){
+      return res.status(400).json({
+         success:false,
+         error:"Quiz already  completed ",
+         statusCode:400
+      })
+    }
+    //*process answers 
   } catch (error) {
     next(error);
   }
