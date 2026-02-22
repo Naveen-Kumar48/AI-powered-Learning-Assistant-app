@@ -14,7 +14,7 @@ export const getQuizzes = async (req, res, next) => {
     res.status(200).json({
       success: true,
       count: quizzes.length,
-      data: quizzes
+      data: quizzes,
     });
   } catch (error) {
     next(error);
@@ -27,18 +27,18 @@ export const getQuizzes = async (req, res, next) => {
 export const getQuizById = async (req, res, next) => {
   try {
     const quiz = await Quiz.findById({
-      _id:req.params.id,
-      userId:req.user._id
-    })
-    if(!quiz){
+      _id: req.params.id,
+      userId: req.user._id,
+    });
+    if (!quiz) {
       return res.status(404).json({
-        success:false,
-        error:'Quiz not found'
-      })
+        success: false,
+        error: "Quiz not found",
+      });
     }
     res.status(200).json({
-      success:true,
-      data:quiz
+      success: true,
+      data: quiz,
     });
   } catch (error) {
     next(error);
@@ -51,28 +51,27 @@ export const getQuizById = async (req, res, next) => {
 export const submitQuiz = async (req, res, next) => {
   try {
     const { answers } = req.body;
-    const quiz = await Quiz.findById(req.params.id);
 
-    if (!quiz) {
-      res.status(404);
-      throw new Error("Quiz not found");
+    if (!Array.isArray(answers)) {
+      return res.status(400).json({
+        success: false,
+        error: "Please provide the answers array",
+        statusCode: 400,
+      });
     }
 
-    // TODO: Calculate score based on answers
-    const score = 0;
-    const results = [];
-
-    // *Save results
-    const result = {
-      quiz: req.params.id,
-      user: req.user._id,
-      score,
-      answers,
-    };
-
-    // TODO: Save result to database
-
-    res.json({ score, results });
+    const quiz = await Quiz.findOne({
+      _id: req.params.id,
+      userId: req.user._id,
+    });
+    if(!quiz){
+      return res.status(404).json({
+        success:false,
+        error:'Quiz not found',
+        statusCode:404
+      })
+    }
+    if(quiz)
   } catch (error) {
     next(error);
   }
