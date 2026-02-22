@@ -64,21 +64,31 @@ export const submitQuiz = async (req, res, next) => {
       _id: req.params.id,
       userId: req.user._id,
     });
-    if(!quiz){
+    if (!quiz) {
       return res.status(404).json({
-        success:false,
-        error:'Quiz not found',
-        statusCode:404
-      })
+        success: false,
+        error: "Quiz not found",
+        statusCode: 404,
+      });
     }
-    if(quiz.completedAt){
+    if (quiz.completedAt) {
       return res.status(400).json({
-         success:false,
-         error:"Quiz already  completed ",
-         statusCode:400
-      })
+        success: false,
+        error: "Quiz already  completed ",
+        statusCode: 400,
+      });
     }
-    //*process answers 
+    //*Process answers
+    let correctCount = 0;
+    const userAnswers = [];
+    answers.forEach((answers) => {
+      const { questionIndex, selectedAnswer } = answers;
+      if (questionIndex < quiz.questions.length) {
+        const question = quiz.questions[questionIndex];
+        const isCorrect = selectedAnswer === question.correctAnswer;
+        if (isCorrect) correctCount++;
+      }
+    });
   } catch (error) {
     next(error);
   }
