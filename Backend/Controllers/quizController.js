@@ -129,7 +129,7 @@ export const getQuizResults = async (req, res, next) => {
     const quiz = await Quiz.findOne({
       _Id: req.params.id,
       userId: req.user._id,
-    }).populate("documentId","title");
+    }).populate("documentId", "title");
     if (!quiz) {
       return res.statusCode(404).json({
         success: false,
@@ -141,21 +141,38 @@ export const getQuizResults = async (req, res, next) => {
       return res.statusCode(400).json({
         success: false,
         error: "Quiz not completed yet ",
-        statusCode: 400
+        statusCode: 400,
       });
     }
-    //*Build DetailedResults 
-    const detailedResults=quiz.questions.map((question,index)=>{
-      const userAnswer=quiz.userAnswers.find(a=>a.questionIndex===index);
-      return{
-        questionIndex:index,
-        question:question.question,
-        options:question.options,
-        correctAnswer:question.correctAnswer,
-   s
-
-      }
-    })
+    //*Build DetailedResults
+    const detailedResults = quiz.questions.map((question, index) => {
+      const userAnswer = quiz.userAnswers.find(
+        (a) => a.questionIndex === index,
+      );
+      return {
+        questionIndex: index,
+        question: question.question,
+        options: question.options,
+        correctAnswer: question.correctAnswer,
+        selectedAnswer: userAnswer?.selectedAnswer || null,
+        isCorrect: userAnswer?.isCorrect || false,
+        explanation: question.explanation,
+      };
+    });
+    res.status(200).json({
+      success: true,
+      data: {
+        quiz: {
+          id: quiz._id,
+          title: quiz.title,
+          document: quiz.documentId,
+          score: quiz.score,
+          totalQuestions: quiz.totalQuestions,
+          completedAt: quiz.completedAt,
+        },
+        results: detailedResults,
+      },
+    });
     res.json({
       success: true,
       data: quiz,
