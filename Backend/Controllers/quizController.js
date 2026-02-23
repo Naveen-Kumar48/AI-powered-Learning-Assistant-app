@@ -7,10 +7,13 @@ export const getQuizzes = async (req, res, next) => {
   try {
     const quizzes = await Quiz.find({
       userId: req.user._id,
-      documentId: req.param.documentId,
+      documentId: req.params.documentId,
     })
-      .populate("documnetId", "title fileName ")
-      .sort({ creetedAt: -1 });
+      .populate("documentId", "title fileName ")
+      .sort({ createdAt: -1 });
+    console.log(req.params);
+    console.log(req.body);
+    console.log(req.user);
     res.status(200).json({
       success: true,
       count: quizzes.length,
@@ -26,7 +29,7 @@ export const getQuizzes = async (req, res, next) => {
 //* @access  Private
 export const getQuizById = async (req, res, next) => {
   try {
-    const quiz = await Quiz.findById({
+    const quiz = await Quiz.findOne({
       _id: req.params.id,
       userId: req.user._id,
     });
@@ -56,7 +59,7 @@ export const submitQuiz = async (req, res, next) => {
       return res.status(400).json({
         success: false,
         error: "Please provide the answers array",
-        statusCode: 400,
+        status: 400,
       });
     }
 
@@ -68,21 +71,21 @@ export const submitQuiz = async (req, res, next) => {
       return res.status(404).json({
         success: false,
         error: "Quiz not found",
-        statusCode: 404,
+        status: 404,
       });
     }
     if (quiz.completedAt) {
       return res.status(400).json({
         success: false,
         error: "Quiz already  completed ",
-        statusCode: 400,
+        status : 400,
       });
     }
     //*Process answers
     let correctCount = 0;
     const userAnswers = [];
-    answers.forEach((answers) => {
-      const { questionIndex, selectedAnswer } = answers;
+    answers.forEach((answer) => {
+      const { questionIndex, selectedAnswer } = answer;
       if (questionIndex < quiz.questions.length) {
         const question = quiz.questions[questionIndex];
         const isCorrect = selectedAnswer === question.correctAnswer;
@@ -107,7 +110,7 @@ export const submitQuiz = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: {
-        quizId: quiz_Id,
+        quizId: quiz._id,
         score,
         correctCount,
         totalQuestions: quiz.totalQuestions,
@@ -127,18 +130,18 @@ export const submitQuiz = async (req, res, next) => {
 export const getQuizResults = async (req, res, next) => {
   try {
     const quiz = await Quiz.findOne({
-      _Id: req.params.id,
+      _id: req.params.id,
       userId: req.user._id,
     }).populate("documentId", "title");
     if (!quiz) {
       return res.statusCode(404).json({
         success: false,
         error: "Quiz not found",
-        statusCode: 404,
+        status: 404,
       });
     }
     if (!quiz.completedAt) {
-      return res.statusCode(400).json({
+      return res.status(400).json({
         success: false,
         error: "Quiz not completed yet ",
         statusCode: 400,
@@ -173,29 +176,34 @@ export const getQuizResults = async (req, res, next) => {
         results: detailedResults,
       },
     });
-    res.json({
-      success: true,
-      data: quiz,
-    });
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Delete quiz
-// @route   DELETE /api/quizzes/:id
-// @access  Private
+// *@desc    Delete quiz
+// *@route   DELETE /api/quizzes/:id
+// *@access  Private
 export const deleteQuiz = async (req, res, next) => {
   try {
-    const quiz = await Quiz.findById(req.params.id);
+    const quiz = await Quiz.findOne({
+      _id: req.params.id,
+      userId: req.user._id,
+    });
 
     if (!quiz) {
-      res.status(404);
-      throw new Error("Quiz not found");
+      return res.statusCode(404).json({
+        success: false,
+        error: "Quiz not found",
+        statusCode: 404,
+      });
     }
-
-    await quiz.remove();
-    res.json({ message: "Quiz removed" });
+    await quiz.deleteOne()
+    res.status(200).json({
+      success: true,
+      data: quiz,
+      message: "Quiz deleted successfully"
+    })
   } catch (error) {
     next(error);
   }
