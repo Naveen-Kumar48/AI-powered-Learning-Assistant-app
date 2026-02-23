@@ -91,25 +91,56 @@ export const submitQuiz = async (req, res, next) => {
           questionIndex,
           selectedAnswer,
           isCorrect,
-          answeredAt:new  Date()
-
-        })
+          answeredAt: new Date(),
+        });
       }
     });
-    //* Calculating  score  
-    const  score =Math.round()
+    //* Calculating  score
+    const score = Math.round((correctCount / quiz.totalQuestions) * 100);
+
+    //*Update quiz
+    quiz.userAnswers = userAnswers;
+    quiz.score = score;
+    quiz.completedAt = new Date();
+    //*saving to the db
+    await quiz.save();
+    res.status(200).json({
+      success: true,
+      data: {
+        quizId: quiz_Id,
+        score,
+        correctCount,
+        totalQuestions: quiz.totalQuestions,
+        percentage: score,
+        userAnswers,
+      },
+      message: "Quiz Submitted Succesfully",
+    });
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Get quiz results
-// @route   GET /api/quizzes/:id/results
-// @access  Private
+// *@desc    Get quiz results
+// *@route   GET /api/quizzes/:id/results
+// *@access  Private
 export const getQuizResults = async (req, res, next) => {
   try {
-    // TODO: Fetch results for the quiz
-    res.json({ message: "Quiz results not yet implemented" });
+    const quiz = await Quiz.findOne({
+      _Id: req.params.id,
+      userId: req.user._id,
+    }).populate("documentId", "title");
+    if (!quiz) {
+      return res.json({
+        success: false,
+        error: "Quiz not found",
+        statusCode: 404,
+      });
+    }
+    res.json({
+      success: true,
+      data: quiz,
+    });
   } catch (error) {
     next(error);
   }
