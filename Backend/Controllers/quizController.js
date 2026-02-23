@@ -129,14 +129,33 @@ export const getQuizResults = async (req, res, next) => {
     const quiz = await Quiz.findOne({
       _Id: req.params.id,
       userId: req.user._id,
-    }).populate("documentId", "title");
+    }).populate("documentId","title");
     if (!quiz) {
-      return res.json({
+      return res.statusCode(404).json({
         success: false,
         error: "Quiz not found",
         statusCode: 404,
       });
     }
+    if (!quiz.completedAt) {
+      return res.statusCode(400).json({
+        success: false,
+        error: "Quiz not completed yet ",
+        statusCode: 400
+      });
+    }
+    //*Build DetailedResults 
+    const detailedResults=quiz.questions.map((question,index)=>{
+      const userAnswer=quiz.userAnswers.find(a=>a.questionIndex===index);
+      return{
+        questionIndex:index,
+        question:question.question,
+        options:question.options,
+        correctAnswer:question.correctAnswer,
+   s
+
+      }
+    })
     res.json({
       success: true,
       data: quiz,
