@@ -16,7 +16,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isSuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     checkAuthStatus();
@@ -53,7 +53,16 @@ export const AuthProvider = ({ children }) => {
   const updateUser = (updateUserData) => {
     const newUserData = { ...user,...updateUserData };
     localStorage.setItem('user',JSON.stringify(newUserData))
+    setUser(newUserData)
   };
-  const value = {};
+  const value = {
+    user,
+    loading,
+    isAuthenticated,
+    login,
+    logout,
+    updateUser,
+    checkAuthStatus
+  };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
