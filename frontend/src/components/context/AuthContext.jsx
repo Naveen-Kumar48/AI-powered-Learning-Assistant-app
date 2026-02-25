@@ -3,7 +3,7 @@ import React, {
   useContext,
   useState,
   useEffect,
-  Children,
+  children
 } from "react";
 const AuthContext = createContext();
 export const useAuth = () => {
@@ -51,11 +51,11 @@ export const AuthProvider = ({ children }) => {
     window.location.href = "/";
   };
   const updateUser = (updateUserData) => {
-    const newUserData = { ...user,...updateUserData };
-    localStorage.setItem('user',JSON.stringify(newUserData))
-    setUser(newUserData)
+    const newUserData = { ...user, ...updateUserData };
+    localStorage.setItem("user", JSON.stringify(newUserData));
+    setUser(newUserData);
   };
-  
+
   const value = {
     user,
     loading,
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     updateUser,
-    checkAuthStatus
+    checkAuthStatus,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

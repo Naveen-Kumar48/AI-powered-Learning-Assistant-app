@@ -12,9 +12,12 @@ import QuizResultPage from './pages/Quizzes/QuizResultPage'
 import ProfilePage from './pages/Profile/ProfilePage'
 import FlashCardPage from './pages/Flashcards/FlashcardPage'
 import FlashcardsListPage from './pages/Flashcards/FlashcardsListPage'
+import { useAuth } from './components/context/AuthContext'
+
+
   const App = () => {
-  const isAuthenticated = false;
-  const loading = false
+
+    const {isAuthenticated, loading} = useAuth(); 
   if (loading) {
     return (
       <div className='flexiten-centerjustify-center h-screen'>
