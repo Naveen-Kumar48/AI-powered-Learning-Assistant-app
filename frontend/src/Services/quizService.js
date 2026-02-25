@@ -40,6 +40,7 @@ const quizService = {
     getQuizzesForDocument,
     getQuizById,
     submitQuiz,
-    getQuizResults
+    getQuizResults,
+    deleteQuiz
 }
 export default quizService;
