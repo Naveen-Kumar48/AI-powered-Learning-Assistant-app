@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Spinner from "../../components/common/Spinner";
 import progressService from "../../Services/progressService.js";
 import toast from "react-hot-toast";
+import axios from "axios";
 import {
   FileText,
   BookOpen,
@@ -50,7 +51,7 @@ const DashboardPage = () => {
       gradient:'from-blue-400 to-cyan-500',
   shadowColor:'shadow-blue-500/20',
       }]
-  }, []);
+  }, [])
   return <div>DashboardPage</div>;
 };
 
