@@ -28,60 +28,64 @@ const DashboardPage = () => {
         setLoading(false);
       }
     };
-    if(loading){
-      return <Spinner/>
-    }
-    }
-    if(!dashboardData || !dashboardData.overview) {
-      return (
-        <div classname=" min-h-screen bg-graf=dient-to-br from  slate-900 to-slate-800  flex items-center justify-center">
-          <div classname="text-center">
-            <div classname="inline-flex items-center w-16 h-16 rounded-2xl bg-slate-100 mb-4">
-              <TrendingUp className="w-8 h-8 text-slate-400" />
-              <p className="text-slate-600 text-sm"> No dashboard data available.</p>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    const stats=[{
-      label:'Total Documents',
-      value:  dashboardData.overview.totalDocuments,
-      icon:FileText,
-      gradient:'from-blue-400 to-cyan-500',
-      shadowColor:'shadow-blue-500/25'
-    },
-  {
-    label:'Total Flashcards',
-    value:dashboardData.overview.totalFlashcards,
-    icon:BookOpen,
-    gradient:'from-purple-400 to-pink-500',
-    shadowColor:'shadow-purple-500/25'
-  },
-  {
-    label:'Total Quizzes',
-    value:dashboardData.overview.totalQuizzes,
-    icon:BrainCircuit,
-    gradient:'from-green-400 to-emerald-500',
-    shadowColor:'shadow-emerald-500/25'
-  },
-  {
-    label:'Average Accuracy',
-    value:dashboardData.overview.averageAccuracy,
-    icon:TrendingUp,
-    gradient:'from-orange-400 to-red-500',
-    shadowColor:'shadow-orange-500/25'
-  },
-  {
-    label:'Time Spent',
-    value:dashboardData.overview.timeSpent,
-    icon:Clock,
-    gradient:'from-blue-400 to-cyan-500',
-    shadowColor:'shadow-blue-500/25'
-  }
-]
-   
+
+    fetchDashboardData();
   }, []);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (!dashboardData || !dashboardData.overview) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-100 mb-4">
+            <TrendingUp className="w-8 h-8 text-slate-400" />
+          </div>
+          <p className="text-slate-600 text-sm">No dashboard data available.</p>
+        </div>
+      </div>
+    );
+  }
+
+  const stats = [
+    {
+      label: "Total Documents",
+      value: dashboardData.overview.totalDocuments,
+      icon: FileText,
+      gradient: "from-blue-400 to-cyan-500",
+      shadowColor: "shadow-blue-500/25",
+    },
+    {
+      label: "Total Flashcards",
+      value: dashboardData.overview.totalFlashcards,
+      icon: BookOpen,
+      gradient: "from-purple-400 to-pink-500",
+      shadowColor: "shadow-purple-500/25",
+    },
+    {
+      label: "Total Quizzes",
+      value: dashboardData.overview.totalQuizzes,
+      icon: BrainCircuit,
+      gradient: "from-green-400 to-emerald-500",
+      shadowColor: "shadow-emerald-500/25",
+    },
+    {
+      label: "Average Accuracy",
+      value: dashboardData.overview.averageAccuracy,
+      icon: TrendingUp,
+      gradient: "from-orange-400 to-red-500",
+      shadowColor: "shadow-orange-500/25",
+    },
+    {
+      label: "Time Spent",
+      value: dashboardData.overview.timeSpent,
+      icon: Clock,
+      gradient: "from-blue-400 to-cyan-500",
+      shadowColor: "shadow-blue-500/25",
+    },
+  ];
   return <div>DashboardPage</div>;
 };
 
