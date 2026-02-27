@@ -89,41 +89,43 @@ const DashboardPage = () => {
 
   return (
     <div className="min-h-screen">
-      <div className=" absolute insert-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16 px_16px] opacity-30 pointer-events-none">
-        <div className="">
+      <div className=" absolute insert-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] opacity-30 pointer-events-none">
+        <div className=" relative max-w-7xl mx-auto">
           {/* Header */}
-          <div className="">
-            <h1> Dashboard</h1>
-            <p>Track your Learning</p>
+          <div className=" mb-16">
+            <h1 className=" text-2xl font-medium text-slate-900 tracking-tight mb-2"> Dashboard</h1>
+            <p className=" text-slate-500 text-sm">Track your Learning progress and Activity</p>
           </div>
           {/* Starts Grid */}
-          <div className="">
+          <div className=" grid grid-cols-1 md:grid-cols-3  gap-6 mb-4">
             {stats.map((stat, index) => (
-              <div key={index} className="">
-                <div></div>
-                <span className="">{stat.label}</span>
-                <div className={`w-11 h-11 rounded-xl bg-linear-to-br ${stat.gradient} shadow-lg ${stat.shadowColor} flex items-center group-hover:scale-110 transition-transform duration-300`}>
-                  <stat.icon className="" strokeWidth={2} />
-                </div>
-                <div className="">
-                  {stat.value}
+              <div key={index} className=" group-relative bg-white/80 backdrop-blur-xl  border border-slate-200/60 shadow-xl shadow-slate-200/50 p-6 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-300 hover:-translate-y-1">
+
+                <div className="flex items-center justify-between" >
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide ">{stat.label}</span>
+                  <div className={`w-11 h-11 rounded-xl bg-linear-to-br ${stat.gradient} shadow-lg ${stat.shadowColor} flex items-center group-hover:scale-110 transition-transform duration-300`}>
+                    <stat.icon className="w-5 h-5 text-white" strokeWidth={2} />
+                  </div>
+                  <div className="text-3xl font-semibold text-slate-900 tracking-tight">
+                    {stat.value}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
         {/* Recent Activity section */}
-        <div className="">
-          <div className="">
-            <div className="">
-              <Clock className="" strokeWidth={2} />
+        <div className="bg-white/80 backdrop-blur-xl  border border-slate-200/60 rounded-2xl shadow-xl shadow-slate-200/50 p-8 ">
+          <div className="flex items-center gap-3 mb-6">
+            <div className=" w-10 h-10 rounded-xl bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+              <Clock className="w-5 h-5 text-slate-600" strokeWidth={2} />
             </div>
-            <h3 className="">
+            <h3 className="text-xl font-medium text-slate-900 tracking-tight">
               Recent Activity
             </h3>
           </div>
           {dashboardData.recentActivity && (dashboardData.recentActivity.documents?.length > 0 || dashboardData.recentActivity.quizzess?.length > 0) ? (
-            <div className="">
+            <div className=" space-y-3">
               {
                 [
                   ...(dashboardData.recentActivity.documents || []).map(doc => ({
@@ -142,11 +144,11 @@ const DashboardPage = () => {
                   }))
                 ]
                   .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-                  .map((activity, index) => {
+                  .map((activity, index) => { 
                     const ActivityIcon = activity.type === 'document' ? FileText : BrainCircuit;
                     return (
                       <div key={activity.id || index} className="">
-                        <div className="">
+                        <div className=" group flex items-center gap-3 justify-between p-4 rounded-xl bg-slate-50/50 border border-slate-200/60 hover:bg-white/80 hover:border-slate-300/60 hover:shadow-md transition-all duration-200">
                           <div className={`w-2 h-2 rounded-full ${activity.type === 'document' ? 'bg-linear-to-r from-blue-400 to-cyan-500' : 'bg-linear-to-r from-emerald-400 to-teal-500'}`}>
                             <p className="">
                               {activity.type === 'document' ? 'Assessed Document' : 'Attempted Quiz'}
@@ -156,10 +158,10 @@ const DashboardPage = () => {
                           <p className="">{new Date(activity.timestamp).toLocaleString()}</p>
                         </div>
                         {activity.link && (
-                            <a href={activity.link} className="">
-                              View
-                            </a>
-                          )}
+                          <a href={activity.link} className="">
+                            View
+                          </a>
+                        )}
                         <div className="">
 
                         </div>
