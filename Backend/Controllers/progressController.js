@@ -34,8 +34,8 @@ export const getDashboard = async (req, res) => {
         const averageScore = quizzes.length > 0 ? Math.round(quizzes.reduce((sum, q) => sum + q.score, 0) / quizzes.length) : 0
 
         //*Recent Activity 
-        const recentDocuments = await Document.find({ userId }).sort({ createdAt: -1 }).limit(5).select('title filename lastAccessed status')
-        const recentQuizzes = await Quiz.find({ userId }).sort({ createdAt: -1 }).limit(5).populate('documentId', 'title').select('title score  totalQuestions completedAt')
+        const recentDocuments = await Document.find({ userId }).sort({ createdAt: -1 }).limit(5).select('title filename lastAccessedAt createdAt status')
+        const recentQuizzes = await Quiz.find({ userId }).sort({ createdAt: -1 }).limit(5).populate('documentId', 'title').select('title score totalQuestions completedAt createdAt')
 
 
         //*Study  Streak (simplyied -in priduction ,track daily activity)

@@ -19,7 +19,7 @@ const DashboardPage = () => {
     const fetchDashboardData = async () => {
       try {
         const data = await progressService.getDashboardData();
-        console.log("Data__getDashboard", data);
+        // console.log("Data__getDashboard", data);
         setDashboardData(data.data);
       } catch (error) {
         toast.error("Failed to fetch Dashboard data");
@@ -36,7 +36,7 @@ const DashboardPage = () => {
     return <Spinner />;
   }
 
-  if (!dashboardData) {
+  if (!dashboardData || !dashboardData.overview) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
         <div className="text-center">
@@ -99,12 +99,14 @@ const DashboardPage = () => {
 
         {/* Starts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {stats.slice(0, 3).map((stat, index) => (
-            <div key={index} className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgb(0,0,0,0.02)] p-6 hover:shadow-[0_8px_24px_rgb(0,0,0,0.06)] transition-all duration-300">
+          {stats.map((stat, index) => (
+            <div key={index} className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgb(0,0,0,0.02)] p-6 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 hover:scale-[1.02] transform transition-all duration-300 cursor-default">
               <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">{stat.label}</h3>
-                  <div className="text-[32px] font-semibold text-slate-800 leading-none">
+                <div className="flex flex-col gap-2">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">
+                    {stat.label}
+                  </span>
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center"    >
                     {stat.value}
                   </div>
                 </div>
@@ -127,20 +129,20 @@ const DashboardPage = () => {
             </h3>
           </div>
 
-          {dashboardData.recentActivity && (dashboardData.recentActivity.documents?.length > 0 || dashboardData.recentActivity.quizzess?.length > 0) ? (
+          {dashboardData.recentActivity && (dashboardData.recentActivity.documents?.length > 0 || dashboardData.recentActivity.quizzes?.length > 0) ? (
             <div className="space-y-4">
               {[
                 ...(dashboardData.recentActivity.documents || []).map(doc => ({
                   id: doc._id,
                   description: doc.title,
-                  timestamp: doc.lastAccessed,
+                  timestamp: doc.lastAccessedAt || doc.createdAt,
                   link: `/documents/${doc._id}`,
                   type: 'document'
                 })),
-                ...(dashboardData.recentActivity.quizzess || []).map(quiz => ({
+                ...(dashboardData.recentActivity.quizzes || []).map(quiz => ({
                   id: quiz._id,
                   description: quiz.title,
-                  timestamp: quiz.lastAccessed,
+                  timestamp: quiz.completedAt || quiz.createdAt,
                   link: `/quizzes/${quiz._id}`,
                   type: 'quiz'
                 }))
@@ -148,7 +150,7 @@ const DashboardPage = () => {
                 .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
                 .map((activity, index) => {
                   return (
-                    <div key={activity.id || index} className="flex items-center justify-between p-5 border border-gray-100/80 rounded-2xl hover:bg-slate-50/50 transition-colors">
+                    <div key={activity.id || index} className="flex items-center justify-between p-5 border border-gray-100/80 rounded-2xl hover:bg-slate-50/80 hover:shadow-[0_4px_20px_rgb(0,0,0,0.05)] hover:-translate-y-1 hover:scale-[1.01] transform transition-all duration-300">
                       <div className="flex items-start gap-4">
                         <div className={`mt-2 w-2 h-2 rounded-full flex-shrink-0 ${activity.type === 'document' ? 'bg-[#0ea5e9]' : 'bg-[#10b981]'}`}></div>
                         <div>
