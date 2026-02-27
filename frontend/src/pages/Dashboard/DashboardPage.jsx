@@ -86,70 +86,101 @@ const DashboardPage = () => {
       shadowColor: "shadow-blue-500/25",
     },
   ];
-  return;
-  <div className="">
-    <div className="">
-      <div className="">
-        {/* Header */}
+
+  return (
+    <div className="min-h-screen">
+      <div className=" absolute insert-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16 px_16px] opacity-30 pointer-events-none">
         <div className="">
-          <h1> Dashboard</h1>
-          <p>Track your Learning</p>
+          {/* Header */}
+          <div className="">
+            <h1> Dashboard</h1>
+            <p>Track your Learning</p>
+          </div>
+          {/* Starts Grid */}
+          <div className="">
+            {stats.map((stat, index) => (
+              <div key={index} className="">
+                <div></div>
+                <span className="">{stat.label}</span>
+                <div className={`w-11 h-11 rounded-xl bg-linear-to-br ${stat.gradient} shadow-lg ${stat.shadowColor} flex items-center group-hover:scale-110 transition-transform duration-300`}>
+                  <stat.icon className="" strokeWidth={2} />
+                </div>
+                <div className="">
+                  {stat.value}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        {/* Starts Grid */}
+        {/* Recent Activity section */}
         <div className="">
-          {stats.map((stat, index) => {
-            <div key={index} className="">
-              <div></div>
-              <span className="">{stat.label}</span>
-            </div>;
-            <div className={`w-11  h-11 rounded-xl bg-linear-to-br ${stat.gradient} shadow-lg ${stat.shadowColor} flex items-center- group-hover:scale-110 transtion-transform duration-300`}> 
-            <stat.icon className="" strokeWidth={2}>
-            </div>
+          <div className="">
             <div className="">
-              {stat.value}
-                 </div>
+              <Clock className="" strokeWidth={2} />
+            </div>
+            <h3 className="">
+              Recent Activity
+            </h3>
+          </div>
+          {dashboardData.recentActivity && (dashboardData.recentActivity.documents?.length > 0 || dashboardData.recentActivity.quizzess?.length > 0) ? (
+            <div className="">
+              {
+                [
+                  ...(dashboardData.recentActivity.documents || []).map(doc => ({
+                    id: doc._id,
+                    description: doc.title,
+                    timestamp: doc.lastAccessed,
+                    link: `/documents/${doc._id}`,
+                    type: 'document'
+                  })),
+                  ...(dashboardData.recentActivity.quizzess || []).map(quiz => ({
+                    id: quiz._id,
+                    description: quiz.title,
+                    timestamp: quiz.lastAccessed,
+                    link: `/quizzes/${quiz._id}`,
+                    type: 'quiz'
+                  }))
+                ]
+                  .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                  .map((activity, index) => {
+                    const ActivityIcon = activity.type === 'document' ? FileText : BrainCircuit;
+                    return (
+                      <div key={activity.id || index} className="">
+                        <div className="">
+                          <div className={`w-2 h-2 rounded-full ${activity.type === 'document' ? 'bg-linear-to-r from-blue-400 to-cyan-500' : 'bg-linear-to-r from-emerald-400 to-teal-500'}`}>
+                            <p className="">
+                              {activity.type === 'document' ? 'Assessed Document' : 'Attempted Quiz'}
+                              <span className="">{activity.description}</span>
+                            </p>
+                          </div>
+                          <p className="">{new Date(activity.timestamp).toLocaleString()}</p>
+                        </div>
+                        {activity.link && (
+                            <a href={activity.link} className="">
+                              View
+                            </a>
+                          )}
+                        <div className="">
+
+                        </div>
+                      </div>
+                    );
+                  })
+              }
+            </div>
+          ) : (
+            <div className="">
+              <div className="">
+                <Clock className="" strokeWidth={2} />
+                <p className="">No recent activity</p>
+                <p>start Learning to see your activity here.</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
-            </div>
-          })}
-     {/* Recent Activity section */}
-     <div className="">
-      <div className="">
-        <div className="">
-<Clock className="" strokeWidth={2}/>
-
-        </div>
-        <h3 className="">
-          Recent Activity
-        </h3>
-      </div>
-      {dashboardData.recentActivity&&(dashboardData.recentActivity.documents.length>0|| dashboardData.recentActivity.quizzess.length>0)?(
-        <div className="">
-          {
-            [
-              ...(dashboardData.recentActivity.documents|| []).map(doc=>(
-                {
-                  id:doc._id,
-                  description:doc.title,
-                  timestamp:doc.lastAccessed,
-                  link:`/documents/${doc._id}`,
-                  type:'document'
-                   
-
-
-                }
-              )),
-             ...(dashboardData.recentActivity.quizzess||[]).map(quiz=>({
-               id:quiz._id,
-               
-             }))
-            ]
-          }
-        </div>
-      )}
-     </div>
-  </div>;
-
+  );
 };
 
 export default DashboardPage;
