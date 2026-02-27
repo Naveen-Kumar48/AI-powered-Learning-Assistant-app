@@ -88,95 +88,96 @@ const DashboardPage = () => {
   ];
 
   return (
-    <div className="min-h-screen">
-      <div className=" absolute insert-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] opacity-30 pointer-events-none">
-        <div className=" relative max-w-7xl mx-auto">
-          {/* Header */}
-          <div className=" mb-16">
-            <h1 className=" text-2xl font-medium text-slate-900 tracking-tight mb-2"> Dashboard</h1>
-            <p className=" text-slate-500 text-sm">Track your Learning progress and Activity</p>
-          </div>
-          {/* Starts Grid */}
-          <div className=" grid grid-cols-1 md:grid-cols-3  gap-6 mb-4">
-            {stats.map((stat, index) => (
-              <div key={index} className=" group-relative bg-white/80 backdrop-blur-xl  border border-slate-200/60 shadow-xl shadow-slate-200/50 p-6 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-300 hover:-translate-y-1">
+    <div className="min-h-screen bg-[#fafbfc] font-sans">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-                <div className="flex items-center justify-between" >
-                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide ">{stat.label}</span>
-                  <div className={`w-11 h-11 rounded-xl bg-linear-to-br ${stat.gradient} shadow-lg ${stat.shadowColor} flex items-center group-hover:scale-110 transition-transform duration-300`}>
-                    <stat.icon className="w-5 h-5 text-white" strokeWidth={2} />
-                  </div>
-                  <div className="text-3xl font-semibold text-slate-900 tracking-tight">
+        {/* Header */}
+        <div className="mb-8 pl-1">
+          <h1 className="text-[28px] font-semibold text-slate-800 tracking-tight mb-1">Dashboard</h1>
+          <p className="text-[#64748b] text-[15px]">Track your learning progress and activity</p>
+        </div>
+
+        {/* Starts Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {stats.slice(0, 3).map((stat, index) => (
+            <div key={index} className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgb(0,0,0,0.02)] p-6 hover:shadow-[0_8px_24px_rgb(0,0,0,0.06)] transition-all duration-300">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">{stat.label}</h3>
+                  <div className="text-[32px] font-semibold text-slate-800 leading-none">
                     {stat.value}
                   </div>
                 </div>
+                <div className={`w-[46px] h-[46px] rounded-[14px] bg-gradient-to-br ${stat.gradient} ${stat.shadowColor} shadow-md flex items-center justify-center`}>
+                  <stat.icon className="w-5 h-5 text-white" strokeWidth={2.5} />
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
+
         {/* Recent Activity section */}
-        <div className="bg-white/80 backdrop-blur-xl  border border-slate-200/60 rounded-2xl shadow-xl shadow-slate-200/50 p-8 ">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgb(0,0,0,0.02)] p-6">
           <div className="flex items-center gap-3 mb-6">
-            <div className=" w-10 h-10 rounded-xl bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+            <div className="w-[42px] h-[42px] rounded-xl bg-[#f1f5f9] flex items-center justify-center">
               <Clock className="w-5 h-5 text-slate-600" strokeWidth={2} />
             </div>
-            <h3 className="text-xl font-medium text-slate-900 tracking-tight">
+            <h3 className="text-[19px] font-semibold text-slate-800 tracking-tight">
               Recent Activity
             </h3>
           </div>
-          {dashboardData.recentActivity && (dashboardData.recentActivity.documents?.length > 0 || dashboardData.recentActivity.quizzess?.length > 0) ? (
-            <div className=" space-y-3">
-              {
-                [
-                  ...(dashboardData.recentActivity.documents || []).map(doc => ({
-                    id: doc._id,
-                    description: doc.title,
-                    timestamp: doc.lastAccessed,
-                    link: `/documents/${doc._id}`,
-                    type: 'document'
-                  })),
-                  ...(dashboardData.recentActivity.quizzess || []).map(quiz => ({
-                    id: quiz._id,
-                    description: quiz.title,
-                    timestamp: quiz.lastAccessed,
-                    link: `/quizzes/${quiz._id}`,
-                    type: 'quiz'
-                  }))
-                ]
-                  .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-                  .map((activity, index) => { 
-                    const ActivityIcon = activity.type === 'document' ? FileText : BrainCircuit;
-                    return (
-                      <div key={activity.id || index} className="">
-                        <div className=" group flex items-center gap-3 justify-between p-4 rounded-xl bg-slate-50/50 border border-slate-200/60 hover:bg-white/80 hover:border-slate-300/60 hover:shadow-md transition-all duration-200">
-                          <div className={`w-2 h-2 rounded-full ${activity.type === 'document' ? 'bg-linear-to-r from-blue-400 to-cyan-500' : 'bg-linear-to-r from-emerald-400 to-teal-500'}`}>
-                            <p className="">
-                              {activity.type === 'document' ? 'Assessed Document' : 'Attempted Quiz'}
-                              <span className="">{activity.description}</span>
-                            </p>
-                          </div>
-                          <p className="">{new Date(activity.timestamp).toLocaleString()}</p>
-                        </div>
-                        {activity.link && (
-                          <a href={activity.link} className="">
-                            View
-                          </a>
-                        )}
-                        <div className="">
 
+          {dashboardData.recentActivity && (dashboardData.recentActivity.documents?.length > 0 || dashboardData.recentActivity.quizzess?.length > 0) ? (
+            <div className="space-y-4">
+              {[
+                ...(dashboardData.recentActivity.documents || []).map(doc => ({
+                  id: doc._id,
+                  description: doc.title,
+                  timestamp: doc.lastAccessed,
+                  link: `/documents/${doc._id}`,
+                  type: 'document'
+                })),
+                ...(dashboardData.recentActivity.quizzess || []).map(quiz => ({
+                  id: quiz._id,
+                  description: quiz.title,
+                  timestamp: quiz.lastAccessed,
+                  link: `/quizzes/${quiz._id}`,
+                  type: 'quiz'
+                }))
+              ]
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                .map((activity, index) => {
+                  return (
+                    <div key={activity.id || index} className="flex items-center justify-between p-5 border border-gray-100/80 rounded-2xl hover:bg-slate-50/50 transition-colors">
+                      <div className="flex items-start gap-4">
+                        <div className={`mt-2 w-2 h-2 rounded-full flex-shrink-0 ${activity.type === 'document' ? 'bg-[#0ea5e9]' : 'bg-[#10b981]'}`}></div>
+                        <div>
+                          <p className="text-[15px] text-slate-800 mb-1 font-medium">
+                            {activity.type === 'document' ? 'Accessed Document: ' : 'Attempted Quiz: '}
+                            <span className="font-normal text-slate-600">{activity.description}</span>
+                          </p>
+                          <p className="text-[13px] text-slate-400">
+                            {activity.timestamp ? new Date(activity.timestamp).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Invalid Date'}
+                          </p>
                         </div>
                       </div>
-                    );
-                  })
+                      {activity.link && (
+                        <a href={activity.link} className="px-4 py-2 text-sm font-semibold text-[#10b981] hover:text-[#059669] transition-colors rounded-lg hover:bg-[#ecfdf5]">
+                          View
+                        </a>
+                      )}
+                    </div>
+                  );
+                })
               }
             </div>
           ) : (
-            <div className="">
-              <div className="">
-                <Clock className="" strokeWidth={2} />
-                <p className="">No recent activity</p>
-                <p>start Learning to see your activity here.</p>
+            <div className="text-center py-16">
+              <div className="inline-flex items-center justify-center w-[42px] h-[42px] rounded-xl bg-slate-100 mb-4">
+                <Clock className="w-5 h-5 text-slate-400" strokeWidth={2} />
               </div>
+              <p className="text-slate-600 font-medium text-[15px]">No recent activity</p>
+              <p className="text-[13px] text-slate-500 mt-1">Start learning to see your activity here.</p>
             </div>
           )}
         </div>
