@@ -36,7 +36,7 @@ const DashboardPage = () => {
     return <Spinner />;
   }
 
-  if (!dashboardData || !dashboardData.overview) {
+  if (!dashboardData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
         <div className="text-center">
@@ -86,7 +86,70 @@ const DashboardPage = () => {
       shadowColor: "shadow-blue-500/25",
     },
   ];
-  return <div>DashboardPage</div>;
+  return;
+  <div className="">
+    <div className="">
+      <div className="">
+        {/* Header */}
+        <div className="">
+          <h1> Dashboard</h1>
+          <p>Track your Learning</p>
+        </div>
+        {/* Starts Grid */}
+        <div className="">
+          {stats.map((stat, index) => {
+            <div key={index} className="">
+              <div></div>
+              <span className="">{stat.label}</span>
+            </div>;
+            <div className={`w-11  h-11 rounded-xl bg-linear-to-br ${stat.gradient} shadow-lg ${stat.shadowColor} flex items-center- group-hover:scale-110 transtion-transform duration-300`}> 
+            <stat.icon className="" strokeWidth={2}>
+            </div>
+            <div className="">
+              {stat.value}
+                 </div>
+      </div>
+    </div>
+            </div>
+          })}
+     {/* Recent Activity section */}
+     <div className="">
+      <div className="">
+        <div className="">
+<Clock className="" strokeWidth={2}/>
+
+        </div>
+        <h3 className="">
+          Recent Activity
+        </h3>
+      </div>
+      {dashboardData.recentActivity&&(dashboardData.recentActivity.documents.length>0|| dashboardData.recentActivity.quizzess.length>0)?(
+        <div className="">
+          {
+            [
+              ...(dashboardData.recentActivity.documents|| []).map(doc=>(
+                {
+                  id:doc._id,
+                  description:doc.title,
+                  timestamp:doc.lastAccessed,
+                  link:`/documents/${doc._id}`,
+                  type:'document'
+                   
+
+
+                }
+              )),
+             ...(dashboardData.recentActivity.quizzess||[]).map(quiz=>({
+               id:quiz._id,
+               
+             }))
+            ]
+          }
+        </div>
+      )}
+     </div>
+  </div>;
+
 };
 
 export default DashboardPage;

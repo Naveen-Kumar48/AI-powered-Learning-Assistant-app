@@ -46,19 +46,21 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       <aside className={`fixed top-0 left-0 h-full w-64 bg-white/90 backdrop-blur-lg border-r border-slate-200/60 z-50 md:relative md:w-64 md:shrink-0 md:flex md:flex-col md:translate-x-0 transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         {/* Logo and Close Button for Mobile */}
         <div className='flex items-center justify-between h-16 px-5 border-b border-slate-200/60'>
-          <div className='flex items-center gap-2'>
-            <BrainCircuit size={24} strokeWidth={2.5} className='text-emerald-600' />
-            <h1 className='text-sm font-bold text-slate-800 tracking-tight'>AI Learning Assistant</h1>
+          <div className='flex items-center gap-3'>
+            <div className='flex items-center  justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-emerald-500/20 '>
+              <BrainCircuit size={24} strokeWidth={2.5} className='text-white' />
+            </div>
+
+            <h1 className='text-sm md:text-base font-bold text-slate-900 tracking-tight'>AI Learning Assistant</h1>
           </div>
-          <button onClick={toggleSidebar} className='md:hidden inline-flex items-center justify-center w-10 h-10 text-slate-500 hover:bg-slate-100 rounded-xl transition-all duration-200'>
+          <button onClick={toggleSidebar} className='md:hidden text-slate-500 hover:text-slate-800'>
             <X size={20} />
           </button>
         </div>
 
         {/* Navigation */}
-        <nav className='flex flex-col gap-2 mt-6 px-4 flex-1'>
+        <nav className='flex-1 px-3 py-6 space-y-1.5'>
           {navLinks.map((link) => {
-            const Icon = link.icon;
             return (
               <NavLink
                 key={link.to}
@@ -68,26 +70,28 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               >
                 {({ isActive }) => (
                   <>
-                    <Icon
+                    <link.icon
                       size={18}
-                      strokeWidth={isActive ? 2.5 : 2}
+                      strokeWidth={2.5}
                       className={`transition-transform duration-200 ${isActive ? '' : 'group-hover:scale-110'}`}
                     />
                     {link.text}
                   </>
                 )}
               </NavLink>
-            );
+            )
           })}
         </nav>
 
-        {/* Logout Button */}
-        <div className="mt-auto p-4 border-t border-slate-200/60">
+        {/* Logout Section */}
+        <div className="px-3 py-4 border-t border-slate-200/60">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl text-slate-600 hover:bg-red-50 hover:text-red-600 transition-all duration-200"
+            className="group flex items-center gap-3 w-full px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-red-50 hover:text-red-600
+            rounded-xl transition-all duration-200"
           >
-            <LogOut size={18} strokeWidth={2} />
+            <LogOut size={18} strokeWidth={2}
+              className='transition-transform duration-200 group-hover:scale-110' />
             Logout
           </button>
         </div>
