@@ -6,8 +6,8 @@ const Tabs = (
     }
 ) => {
     return <div className='w-full'>
-        <div className=''>
-            <nav className=''>
+        <div className='relative border-b-2 border-slate-100'>
+            <nav className='flex gap-2'>
                 {tabs.map((tab) => (
                     <button
                         key={tab.name}
@@ -17,24 +17,24 @@ const Tabs = (
                                 ? 'text-emerald-600'
                                 : 'text-slate-600 hover:text-slate-900'}`}
                     >
-                        <span className=''>{tab.label}</span>
+                        <span className='relative z-10'>{tab.label}</span>
                         {
                             activeTab === tab.name && (
-                                <div className='' />
+                                <div className='absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg shadow emerald-500' />
                             )}
                         {activeTab === tab.name && (
-                            <div className='' />
+                            <div className='absolute inset-0  bg-gradient-to-b from-emerald-50/50 to-transparent rounded-t-xl z-10' />
                         )}
                     </button>
                 ))}
             </nav>
         </div>
-        <div className=''>
+        <div className='py-6'>
             {tabs.map((tab)=>{
                 if(tab.name===activeTab){
                     return (
                         <div key={tab.name}
-                        className=''>
+                        className='animate-in fade-in duration-300'>
                             {tab.content}
                         </div>
                     );
