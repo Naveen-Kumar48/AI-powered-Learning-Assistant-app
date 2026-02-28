@@ -13,26 +13,10 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   }
 
   const navLinks = [
-    {
-      to: "/dashboard",
-      icon: LayoutDashboard,
-      text: "Dashboard"
-    },
-    {
-      to: "/documents",
-      icon: FileText,
-      text: "Documents"
-    },
-    {
-      to: "/flashcards",
-      icon: BookOpen,
-      text: "Flashcards"
-    },
-    {
-      to: "/profile",
-      icon: User,
-      text: "Profile"
-    }
+    { to: "/dashboard", icon: LayoutDashboard, text: "Dashboard" },
+    { to: "/documents", icon: FileText, text: "Documents" },
+    { to: "/flashcards", icon: BookOpen, text: "Flashcards" },
+    { to: "/profile", icon: User, text: "Profile" }
   ]
 
   return (
@@ -54,14 +38,13 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             <h1 className='text-sm md:text-base font-bold text-slate-900 tracking-tight'>AI Learning Assistant</h1>
           </div>
           <button onClick={toggleSidebar} className='md:hidden text-slate-500 hover:text-slate-800'>
-            <X size={20} />
+            <X size={24} />
           </button>
         </div>
 
         {/* Navigation */}
         <nav className='flex-1 px-3 py-6 space-y-1.5'>
-          {navLinks.map((link) => {
-            return (
+          {navLinks.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}
@@ -80,7 +63,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 )}
               </NavLink>
             )
-          })}
+          )}
         </nav>
 
         {/* Logout Section */}
@@ -90,7 +73,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             className="group flex items-center gap-3 w-full px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-red-50 hover:text-red-600
             rounded-xl transition-all duration-200"
           >
-            <LogOut size={18} strokeWidth={2}
+            <LogOut size={18} strokeWidth={2.5}
               className='transition-transform duration-200 group-hover:scale-110' />
             Logout
           </button>

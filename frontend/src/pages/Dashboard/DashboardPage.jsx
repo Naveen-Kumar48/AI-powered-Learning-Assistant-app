@@ -52,7 +52,7 @@ const DashboardPage = () => {
   const stats = [
     {
       label: "Total Documents",
-      value: dashboardData.overview.totalDocuments,
+      value: dashboardData.overview.totalDocument,
       icon: FileText,
       gradient: "from-blue-400 to-cyan-500",
       shadowColor: "shadow-blue-500/25",
@@ -70,46 +70,36 @@ const DashboardPage = () => {
       icon: BrainCircuit,
       gradient: "from-green-400 to-emerald-500",
       shadowColor: "shadow-emerald-500/25",
-    },
-    {
-      label: "Average Accuracy",
-      value: dashboardData.overview.averageAccuracy,
-      icon: TrendingUp,
-      gradient: "from-orange-400 to-red-500",
-      shadowColor: "shadow-orange-500/25",
-    },
-    {
-      label: "Time Spent",
-      value: dashboardData.overview.timeSpent,
-      icon: Clock,
-      gradient: "from-blue-400 to-cyan-500",
-      shadowColor: "shadow-blue-500/25",
-    },
+    }
+
   ];
 
   return (
-    <div className="min-h-screen bg-[#fafbfc] font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
+
+    <div className="min-h-screen">
+      <div className="absolute inset-0 bg[[radial-gradient(#e5e7eb_1px,transparent_1px)]bg-size-[16px_16px] opacity-20 pointer-events-none"></div>
+      <div className="relative max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8 pl-1">
-          <h1 className="text-[28px] font-semibold text-slate-800 tracking-tight mb-1">Dashboard</h1>
-          <p className="text-[#64748b] text-[15px]">Track your learning progress and activity</p>
+        <div className="mb-6">
+          <h1 className="text-2xl font-medium text-slate-900 tracking-tight mb-2">Dashboard</h1>
+          <p className="text-slate-500 text-sm">Track your learning progress and activity</p>
         </div>
 
         {/* Starts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
           {stats.map((stat, index) => (
-            <div key={index} className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgb(0,0,0,0.02)] p-6 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 hover:scale-[1.02] transform transition-all duration-300 cursor-default">
-              <div className="flex items-start justify-between">
-                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">
+            <div key={index}
+              className="group relative bg-white rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgb(0,0,0,0.02)] p-6 hover:shadow-[0_8px_24px_rgb(0,0,0,0.08)] hover:-translate-y-1 hover:scale-[1.02] transform transition-all duration-300 cursor-default">
+              <div className="flex justify-between items-start">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
                   {stat.label}
                 </span>
-                <div className={`w-11 h-11 rounded-xl bg-linear-to-br ${stat.gradient} ${stat.shadowColor}  flex items-center justify-center group-hover:scale-110 transform-transition duration-200 `}>
+                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${stat.gradient}  ${stat.shadowColor} flex items-center justify-center group-hover:scale-110 transform-transition duration-300`}>
                   <stat.icon className="w-5 h-5 text-white" strokeWidth={2} />
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="text-3xl font-semibold text-slate-900 tracking-tight">
                 {stat.value}
               </div>
             </div>
@@ -117,29 +107,29 @@ const DashboardPage = () => {
         </div>
 
         {/* Recent Activity section */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_12px_rgb(0,0,0,0.02)] p-6">
+        <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-slate-200/50 p-8">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-[42px] h-[42px] rounded-xl bg-[#f1f5f9] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-linear-to-br from-slate-100 to-slate-200 flex items-center justify-center">
               <Clock className="w-5 h-5 text-slate-600" strokeWidth={2} />
             </div>
-            <h3 className="text-[19px] font-semibold text-slate-800 tracking-tight">
+            <h3 className="text-xl font-medium text-slate-900 tracking-tight">
               Recent Activity
             </h3>
           </div>
-          {dashboardData.recentActivity && (dashboardData.recentActivity.documents?.length > 0 || dashboardData.recentActivity.quizzes.length > 0) ? (
+          {dashboardData.recentActivity && (dashboardData.recentActivity.documents.length > 0 || dashboardData.recentActivity.quizzes.length > 0) ? (
             <div className="space-y-4">
               {[
                 ...(dashboardData.recentActivity.documents || []).map(doc => ({
                   id: doc._id,
                   description: doc.title,
-                  timestamp: doc.lastAccessedAt || doc.createdAt,
+                  timestamp: doc.lastAccessedAt,
                   link: `/documents/${doc._id}`,
                   type: 'document'
                 })),
                 ...(dashboardData.recentActivity.quizzes || []).map(quiz => ({
                   id: quiz._id,
                   description: quiz.title,
-                  timestamp: quiz.completedAt || quiz.createdAt,
+                  timestamp: quiz.lastAccessedAt,
                   link: `/quizzes/${quiz._id}`,
                   type: 'quiz'
                 }))
@@ -150,8 +140,9 @@ const DashboardPage = () => {
                     <div key={activity.id || index}
                       className="flex items-center justify-between p-5 border border-gray-100/80 rounded-2xl hover:bg-slate-50/80 hover:shadow-[0_4px_20px_rgb(0,0,0,0.05)] hover:-translate-y-1 hover:scale-[1.01] transform transition-all duration-300">
                       <div className="flex items-start gap-4">
-                        <div className={`mt-2 w-2 h-2 rounded-full flex-shrink-0 ${activity.type === 'document' ? 'bg-[#0ea5e9]' : 'bg-[#10b981]'}`}>
-
+                        <div className={`mt-2 w-2 h-2 rounded-full flex-shrink-0 ${activity.type === 'document' ?
+                            'bg-gradient-to-r from-blue-400 to-cyan-500'
+                            : 'bg-gradient-to-r from-emerald-400 to-teal-500'}`}>
                         </div>
                         <div>
                           <p className="text-[15px] text-slate-800 mb-1 font-medium">
@@ -159,7 +150,7 @@ const DashboardPage = () => {
                             <span className="font-normal text-slate-600">{activity.description}</span>
                           </p>
                           <p className="text-[13px] text-slate-400">
-                            {activity.timestamp ? new Date(activity.timestamp).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Invalid Date'}
+                            {activity.timestamp ? new Date(activity.timestamp).toLocaleString('en-GB') : 'Date not available'}
                           </p>
                         </div>
                       </div>
@@ -178,7 +169,7 @@ const DashboardPage = () => {
               <div className="inline-flex items-center justify-center w-[42px] h-[42px] rounded-xl bg-slate-100 mb-4">
                 <Clock className="w-5 h-5 text-slate-400" strokeWidth={2} />
               </div>
-              <p className="text-slate-600 font-medium text-[15px]">No recent activity</p>
+              <p className="text-slate-600 font-medium text-[15px]">No recent activity Yet!</p>
               <p className="text-[13px] text-slate-500 mt-1">Start learning to see your activity here.</p>
             </div>
           )}
