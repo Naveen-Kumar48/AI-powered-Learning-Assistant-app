@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import PageHeader from "../../components/common/PageHeader"
 import Tabs from "../../components/common/Tabs"
-
+import ChatInterface from "../../components/chat/ChatInterface"
 const DocumentdetailPage = () => {
   const { id } = useParams();
   const [document, setDocument] = useState(null);
@@ -79,7 +79,7 @@ const DocumentdetailPage = () => {
     );
   };
   const renderChat = () => {
-    return "renderChat "
+    return <ChatInterface/>
   }
   const renderAIActions = () => {
     return "renderAIActions"
