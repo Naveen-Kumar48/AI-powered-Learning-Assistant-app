@@ -30,7 +30,7 @@ const generateSummary = async (documentId) => {
 
 const chat = async (documentId, message) => {
     try {
-        const response = await axiosInstance.post(API_PATHS.AI.CHAT_WITH_AI, { documentId, message });
+        const response = await axiosInstance.post(API_PATHS.AI.CHAT, { documentId, question: message });
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: "failed to chat with AI" };
@@ -52,7 +52,7 @@ const getChatHistory = async (documentId) => {
     } catch (error) {
         throw error.response?.data || { message: "Failed to get chat history" };
     }
-}   
+}
 const aiService = {
     generateFlashcards,
     generateQuiz,

@@ -48,7 +48,7 @@ const ChatInterface = () => {
         setMessage("");
         setLoading(true);
         try {
-            const response = await aiService.sendMessage(docuemntId, userMessage.content);
+            const response = await aiService.chat(docuemntId, userMessage.content);
             const assistantMessage = {
                 role: "assistant", content: response.data.answer,
                 timestamp: new Date(),
@@ -78,8 +78,8 @@ const ChatInterface = () => {
                     </div>
                 )}
                 <div className={`max-w-[75%] p-4 rounded-2xl ${isUser
-                        ? "bg-emerald-500 text-white rounded-tr-sm shadow-md shadow-emerald-500/10"
-                        : "bg-white border border-slate-100 text-slate-800 rounded-tl-sm shadow-md shadow-slate-200/50"}`}>
+                    ? "bg-emerald-500 text-white rounded-tr-sm shadow-md shadow-emerald-500/10"
+                    : "bg-white border border-slate-100 text-slate-800 rounded-tl-sm shadow-md shadow-slate-200/50"}`}>
                     {isUser ? (
                         <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{message.content}</p>
                     ) : (
