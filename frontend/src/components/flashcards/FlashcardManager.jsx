@@ -125,7 +125,7 @@ const FlashcardManager = ({ documentId }) => {
     };
 
 
-    
+
     const renderSetList = () => {
         if (loading) {
             return (
@@ -136,15 +136,18 @@ const FlashcardManager = ({ documentId }) => {
         }
         return (
             <div className="flex flex-col items-center justify-center py-16 px-6">
-                <div className="inline flex items-center justify-center w-16 h-16 bg-linear-to-br from-emerald-100 to-teal-100 mb-6">
+                <div className="inline flex items-center justify-center w-16 h-16 bg-linear-to-br rounded-2xl from-emerald-100 to-teal-100 mb-6">
                     <Brain className="w-8 h-8 text-emerald-600" strokeWidth={2} />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-2">No flashcard sets yet</h3>
-                <p className="text-sm text-slate-500 mb-8 text-center max-w-sm">Generate flashcards from your Document to start learning and reinforce your knowledge</p>
+                <h3 className="text-xl font-semibold text-slate-900 mb-2"
+                >No flashcard sets yet
+                </h3>
+                <p className="text-sm text-slate-500 mb-8 text-center max-w-sm">
+                    Generate flashcards from your Document to start learning and reinforce your knowledge</p>
                 <button
                     onClick={handleGenerateFlashcards}
                     disabled={generating}
-                    className="group inline-flex items-center gap-2 px-6 h-12 bg-linear-to-r from-emerald-500 to-teal-500  hover:from emrald-600 hover:to-teal 600 text-sm rouded xl transition-all duration-200shadow-lg shadow-emerald-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
+                    className="group inline-flex items-center justify-center gap-2 px-6 h-12 bg-linear-to-r from-emerald-500 to-teal-500  hover:from emrald-600 hover:to-teal-600 text-white text-sm rouded-xl transition-all duration-200shadow-lg shadow-emerald-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
                 >
                     {generating ? (
                         <>
