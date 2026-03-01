@@ -1,5 +1,4 @@
 import React from 'react'
-
 const Tabs = (
     {
         tabs, activeTab, setActiveTab
@@ -9,7 +8,7 @@ const Tabs = (
         <div className='relative border-b-2 border-slate-100'>
             <nav className='flex gap-2'>
                 {tabs.map((tab) => (
-                    <button
+                    <button 
                         key={tab.name}
                         onClick={() => setActiveTab(tab.name)}
                         className={`relative pb-4 px-2 md:px-6 text-sm font-semibold transition-all duration-200
@@ -30,11 +29,11 @@ const Tabs = (
             </nav>
         </div>
         <div className='py-6'>
-            {tabs.map((tab)=>{
-                if(tab.name===activeTab){
+            {tabs.map((tab) => {
+                if (tab.name === activeTab) {
                     return (
                         <div key={tab.name}
-                        className='animate-in fade-in duration-300'>
+                            className='animate-in fade-in duration-300'>
                             {tab.content}
                         </div>
                     );

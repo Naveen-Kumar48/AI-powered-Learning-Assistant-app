@@ -17,7 +17,7 @@ const PageHeader = ({ title, subtitle, children }) => {
                 {children}
             </div>}
         </div>
-    )
+    ) 
 }
 
 export default PageHeader
