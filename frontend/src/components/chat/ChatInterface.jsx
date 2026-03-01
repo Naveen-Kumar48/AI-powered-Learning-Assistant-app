@@ -7,7 +7,7 @@ import { useAuth } from "../../components/context/AuthContext"
 import Spinner from "../common/Spinner"
 import MarkdownRenderer from "../common/MarkdownRenderer"
 
-
+ 
 const ChatInterface = () => {
     const { id: docuemntId } = useParams();
     const { user } = useAuth();
@@ -43,18 +43,23 @@ const ChatInterface = () => {
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!message.trim()) return;
+
+
         const userMessage = { role: "user", content: message, timestamp: new Date() };
-        setHistory((prev) => [...prev, userMessage]);
+        setHistory(prev => [...prev, userMessage]);
         setMessage("");
         setLoading(true);
+
+
         try {
             const response = await aiService.chat(docuemntId, userMessage.content);
             const assistantMessage = {
-                role: "assistant", content: response.data.answer,
+                role: "assistant",
+                content: response.data.answer,
                 timestamp: new Date(),
                 relevantChunks: response.data.relevantChunks
             };
-            setHistory((prev) => [...prev, assistantMessage]);
+            setHistory(prev => [...prev, assistantMessage]);
         } catch (error) {
             console.error("Chat error:", error);
             toast.error("Failed to send message");
@@ -63,32 +68,35 @@ const ChatInterface = () => {
                 content: "Sorry, I'm having trouble understanding you. Please try rephrasing your question.",
                 timestamp: new Date()
             };
-            setHistory((prev) => [...prev, errorMessage]);
+            setHistory(prev => [...prev, errorMessage]);
         } finally {
             setLoading(false);
         }
     }
-    const renderMessage = (message, index) => {
-        const isUser = message.role === "user";
+    const renderMessage = (msg, index) => { 
+        const isUser = msg.role === "user";
         return (
             <div key={index} className={`flex ${isUser ? "justify-end" : "justify-start"} items-start gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300`}>
                 {!isUser && (
-                    <div className='shrink-0 w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center shadow-md shadow-emerald-500/20'>
-                        <Sparkles className='w-5 h-5 text-white' strokeWidth={2} />
+                    <div className='shrink-0 w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center shadow-md shadow-emerald-500/20'>
+                        <Sparkles className='w-4 h-4 text-white' strokeWidth={2} />
                     </div>
                 )}
-                <div className={`max-w-[75%] p-4 rounded-2xl ${isUser
-                    ? "bg-emerald-500 text-white rounded-tr-sm shadow-md shadow-emerald-500/10"
-                    : "bg-white border border-slate-100 text-slate-800 rounded-tl-sm shadow-md shadow-slate-200/50"}`}>
+                <div className={`max-w-lg  p-4 rounded-2xl shadow-sm  ${
+                    isUser
+                    ? "bg-linear-to-br from-emerald-500 to-teal-500 text-white rounded-br-md shadow-md shadow-emerald-500/10"
+                    : "bg-white border border-slate-200/60 text-slate-800 rounded-bl-md "}`}>
                     {isUser ? (
-                        <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                        <p className="text-sm leading-relaxed">{msg.content}</p>
                     ) : (
-                        <MarkdownRenderer content={message.content} />
+                      <div className='prose prose-sm prose-slate max-w-none'>
+                        <MarkdownRenderer content={msg.content} />
+                      </div>
                     )}
                 </div>
                 {isUser && (
-                    <div className='shrink-0 w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold shadow-sm'>
-                        {user?.username?.charAt(0).toUpperCase() || user?.uername?.charAt(0).toUpperCase() || 'U'}
+                    <div className='shrink-0 w-9 h-9 rounded-xl bg-linear-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-slate-700 font-semibold  shadow-sm'>
+                        {user?.username?.charAt(0).toUpperCase() || 'U'}
                     </div>
                 )}
             </div>
@@ -112,12 +120,12 @@ const ChatInterface = () => {
             {/* Message Area */}
             <div className='flex-1 overflow-y-auto p-6 space-y-6 relative'>
                 {history.length === 0 ? (
-                    <div className='flex flex-col items-center justify-center h-full min-h-[40vh] text-center'>
-                        <div className='w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6 shadow-inner'>
-                            <MessageSquare className='w-10 h-10 text-emerald-600' strokeWidth={2} />
+                    <div className='flex flex-col items-center justify-center h-full   text-center'>
+                        <div className='w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/20'>
+                            <MessageSquare className='w-8 h-8 text-emerald-600' strokeWidth={2} />
                         </div>
-                        <h3 className='text-2xl font-bold text-slate-800 mb-2'>Start a conversation</h3>
-                        <p className='text-slate-500 max-w-sm'>Ask me anything about your document!</p>
+                        <h3 className='text-base font-semibold text-slate-900 mb-2'>Start a conversation</h3>
+                        <p className='text-slate-500 text-sm'>Ask me anything about this document!</p>
                     </div>
                 ) : (
                     history.map(renderMessage)
@@ -125,17 +133,16 @@ const ChatInterface = () => {
                 <div ref={messageEndRef} className="h-4" />
                 {
                     loading && (
-                        <div className='flex justify-start items-start gap-4 animate-in fade-in duration-300'>
-                            <div className='shrink-0 w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center shadow-md shadow-emerald-500/20'>
-                                <Sparkles className='w-5 h-5 text-white' strokeWidth={2} />
+                        <div className='flex items-center gap-3 my-4'>
+                            <div className='w-9 h-9 rounded-full bg-linear-to-br from-emerald-500 to-teal-500 flex items-center shadow-lg shadow-emerald-500/25 flex-items-center justify-center shrink-0'>
+                                <Sparkles className='w-4 h-4 text-white' strokeWidth={2} />
                             </div>
-                            <div className='flex items-center space-x-3 bg-white border border-slate-100 shadow-md shadow-slate-200/50 p-4 rounded-2xl rounded-tl-sm max-w-[75%]'>
-                                <Spinner className='w-5 h-5 text-emerald-600' strokeWidth={2} />
-                                <p className='text-sm font-medium text-slate-600'>AI is typing...</p>
-                                <div className='flex items-center gap-1 ml-2'>
-                                    <span className='w-1.5 h-1.5 bg-emerald-500 rounded-full animate-bounce' style={{ animationDelay: '0ms' }}></span>
-                                    <span className='w-1.5 h-1.5 bg-emerald-500 rounded-full animate-bounce' style={{ animationDelay: '150ms' }}></span>
-                                    <span className='w-1.5 h-1.5 bg-emerald-500 rounded-full animate-bounce' style={{ animationDelay: '300ms' }}></span>
+                            <div className='flex items-center gap-2 px-4 py-3 rounded-2xl rounded-bl-md bg-white border border-slate-200/60 shadow-md shadow-slate-200/50'>
+                                <p className='text-sm font-medium text-slate-600'>typing...</p>
+                                <div className='flex gap-1 '>
+                                    <span className='w-2 h-2 bg-slate-400 rounded-full animate-bounce' style={{ animationDelay: '0ms' }}></span>
+                                    <span className='w-2 h-2 bg-slate-400 rounded-full animate-bounce' style={{ animationDelay: '150ms' }}></span>
+                                    <span className='w-2 h-2 bg-slate-400 rounded-full animate-bounce' style={{ animationDelay: '300ms' }}></span>
                                 </div>
                             </div>
                         </div>
@@ -143,23 +150,24 @@ const ChatInterface = () => {
             </div>
 
             {/* Input Area */}
-            <div className='p-4 bg-white border-t border-slate-200'>
+            <div className='p-5 bg-white/80 border-t border-slate-200'>
                 <form onSubmit={handleSendMessage} className='flex items-center gap-3'>
                     <input type="text"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder='Ask a follow-up question...'
                         disabled={loading}
-                        className='flex-1 p-4 border border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-slate-50/50 transition-all duration-200 placeholder:text-slate-400 text-slate-700' />
+                        className='flex-1 h-12 px-4 border-2 border-slate-200 rounded-xl bg-slate-50/50 text-slate-900 placeholder-slate-400 text-sm font-medium transition-all duration-200 focus:outline-none focus:border-emerald-500 focus:bg-white focus:shadow-lg focus:shadow-emerald-500/10' />
+
                     <button type='submit'
-                        disabled={loading || !message.trim()}
-                        className='shrink-0 p-4 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:hover:shadow-none disabled:hover:translate-y-0 disabled:bg-slate-300'
+                        disabled={loading || !message.trim()}   
+                        className='shrink-0 w-12 h-12 flex items-center justify-center bg-emerald-500 text-white rounded-full hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 disabled:hover:shadow-none disabled:hover:translate-y-0 disabled:bg-slate-300'
                     >
                         <Send className='w-5 h-5' strokeWidth={2} />
                     </button>
                 </form>
             </div>
-        </div>
+        </div>  
     )
 }
 

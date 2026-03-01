@@ -1,4 +1,5 @@
 .env
 node_modules
-
-                
+  test_models.txt
+  test_out.txt
+  test_out2.txt

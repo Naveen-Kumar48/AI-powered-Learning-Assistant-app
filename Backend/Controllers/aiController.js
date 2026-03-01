@@ -145,7 +145,7 @@ export const generateSummary = async(req,res,next) => {
         title: document.title,
         summary,
       },
-      message: "Summary is Generated Success fully",
+      message: "Summary is Generated Successfully",
     });
   } catch (error) {
     next(error);
