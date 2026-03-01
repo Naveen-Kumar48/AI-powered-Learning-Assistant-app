@@ -30,7 +30,7 @@ ${text.substring(0, 15000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash',
+            model: 'gemini-flash-latest',
             contents: prompt,
         });
         const generatedText = response.text;
@@ -93,7 +93,7 @@ ${text.substring(0, 15000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-2.0-flash",
+            model: "gemini-flash-latest",
             contents: prompt,
         });
 
@@ -140,7 +140,7 @@ ${text.substring(0, 20000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash',
+            model: 'gemini-flash-latest',
             contents: prompt,
         });
         const generatedText = response.text;
@@ -172,7 +172,7 @@ Answer:`;
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-2.0-flash",
+            model: "gemini-flash-latest",
             contents: prompt,
         });
 
@@ -200,7 +200,7 @@ ${context.substring(0, 10000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-2.0-flash",
+            model: "gemini-flash-latest",
             contents: prompt,
         });
         const generatedText = response.text;
