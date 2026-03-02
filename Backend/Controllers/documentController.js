@@ -30,17 +30,15 @@ export const uploadDocument = async (req, res, next) => {
         statusCode: 400,
       });
     }
-    //construct the url   fro the uploded file
-    const baseUrl = `http://localhost:${process.env.PORT || 8000}`;
-    const fileUrl = `${baseUrl}/uploads/documents/${req.file.filename}`;
+      //construct the relative url for the uploaded file
+    const fileUrl = `/uploads/documents/${req.file.filename}`;
 
-    //creating  the document record
-
+    //creating the document record
     const document = await Document.create({
       userId: req.user._id,
       title,
       fileName: req.file.originalname,
-      filePath: fileUrl, // storing the url  instead  of the local path
+      filePath: fileUrl, // storing the relative url
       fileSize: req.file.size,
       status: "processing",
     });
@@ -58,7 +56,7 @@ export const uploadDocument = async (req, res, next) => {
   } catch (error) {
     // clean up file on the error
     if (req.file) {
-      await fs.unlink(req.file.path).catch(() => {});
+      await fs.unlink(req.file.path).catch(() => { });
     }
     next(error);
   }
@@ -203,7 +201,7 @@ export const deleteDocument = async (req, res, next) => {
       });
     }
     //* delete file from  the file system
-    await fs.unlink(document.filePath).catch(() => {});
+    await fs.unlink(document.filePath).catch(() => { });
     //*Delete document
     await document.deleteOne();
     res.status(200).json({

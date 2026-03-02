@@ -38,16 +38,25 @@ const DocumentdetailPage = () => {
   const getPdfUrl = () => {
     if (!document?.data?.filePath) return null;
 
-    const filePath = document.data.filePath;
-    let url = filePath;
-    if (!filePath.startsWith("http://") && !filePath.startsWith("https://")) {
-      const baseUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : Base_URL;
+    let filePath = document.data.filePath;
+    const baseUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : Base_URL;
+    const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 
-      // Clean up the URL format to ensure no double slashes before uploads/
-      const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+    // If the database has a legacy localhost hardcoded URL, strip it to grab just the relative path
+    if (filePath.includes("localhost:")) {
+      const urlParts = filePath.split("/uploads/");
+      if (urlParts.length > 1) {
+        filePath = `/uploads/${urlParts[1]}`;
+      }
+    }
+
+    let url = filePath;
+    // Finally append to the dynamic Render Base URL
+    if (!filePath.startsWith("http://") && !filePath.startsWith("https://")) {
       const cleanFilePath = filePath.startsWith('/') ? filePath : `/${filePath}`;
       url = `${cleanBaseUrl}${cleanFilePath}`;
     }
+
     return url;
   };
 
