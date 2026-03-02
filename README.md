@@ -1,7 +1,10 @@
 <div align="center">
   <img src="https://img.shields.io/badge/MERN-Stack-blue?style=for-the-badge&logo=mongodb" alt="MERN Stack">
-  <img src="https://img.shields.io/badge/Gemini_2.5_Flash-orange?style=for-the-badge&logo=google" alt="Google GenAI">
-  <img src="https://img.shields.io/badge/React_18-cyan?style=for-the-badge&logo=react" alt="React">
+  <img src="https://img.shields.io/badge/Gemini-AI-orange?style=for-the-badge&logo=google" alt="Google GenAI">
+  <img src="https://img.shields.io/badge/React-18-cyan?style=for-the-badge&logo=react" alt="React">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-18-cyan?style=for-the-badge&logo=tailwindcss" alt="Tailwind CSS">
+
+  
   
   # 🧠 AI-Powered Learning Assistant
 
