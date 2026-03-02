@@ -10,6 +10,7 @@ import ChatInterface from "../../components/chat/ChatInterface"
 import AiActions from "../../components/Ai/AIActions.jsx";
 import FlashcardManager from "../../components/flashcards/FlashcardManager.jsx";
 import QuizManager from "../../components/quizzes/QuizManager.jsx";
+import { Base_URL } from "../../utils/apiPaths.js";
 
 const DocumentdetailPage = () => {
   const { id } = useParams();
@@ -40,8 +41,12 @@ const DocumentdetailPage = () => {
     const filePath = document.data.filePath;
     let url = filePath;
     if (!filePath.startsWith("http://") && !filePath.startsWith("https://")) {
-      const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
-      url = `${baseUrl}${filePath.startsWith("/") ? "" : "/"}${filePath}`;
+      const baseUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : Base_URL;
+
+      // Clean up the URL format to ensure no double slashes before uploads/
+      const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+      const cleanFilePath = filePath.startsWith('/') ? filePath : `/${filePath}`;
+      url = `${cleanBaseUrl}${cleanFilePath}`;
     }
     return url;
   };
