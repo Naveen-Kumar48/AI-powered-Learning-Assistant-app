@@ -13,11 +13,11 @@
 ## ✨ Features
 
 - **🛡️ Secure Authentication**: Full user signup and login flow protected by JWT and hashed passwords.
-- **📄 Smart Document Processing**: Upload your PDF documents and extract their text smoothly across scalable storage.
+- **📄 Smart Document Processing**: Upload your PDF documents and securely extract their text utilizing local storage buffers.
 - **🤖 Deep AI Integrations**: Seamlessly integrated with Google's GenAI (Gemini) API to give you context-aware insights.
-- **💬 Chat with Document**: Built-in interactive chat to ask direct questions to your document.
+- **💬 Chat with Document**: Built-in interactive chat to ask direct questions about the content of your document.
 - **📚 Interactive Study Sets**: Auto-generate robust Flashcards and multiple-choice Quizzes straight from your reading material.
-- **🎨 Premium UI/UX**: Designed to look stunning on every platform using React, standard Tailwind CSS, and Lucide Icons.
+- **🎨 Premium UI/UX**: Designed to look stunning on every platform using React, standard Tailwind CSS, modern glass-morphism, and Lucide Icons.
 
 ---
 
@@ -27,22 +27,61 @@
 - **Core Framework**: Node.js & Express.js
 - **Database**: MongoDB (Local/Atlas) managed with Mongoose ODM
 - **Security**: JWT tokens, bcrypt.js for passwords
-- **Intelligence Core**: `@google/genai` sdk
+- **Intelligence Core**: `@google/genai` (Gemini 2.5 Flash SDK)
 - **File & Extraction Handling**: Multer, PDF-Parse, and custom logical chunking
 
 **Frontend Experience**
 - **Core Engine**: React.js driven by Vite tooling
 - **Routing**: `react-router-dom` v6
-- **State & Data Fetching**: Axios customized instances
+- **State & Data Fetching**: Context API & Axios
 - **CSS Architecture**: Tailwind CSS
-- **Polished Feedback**: React Hot Toast
-- **Data Rendering**: Beautiful markdown parsed from AI streams using React Markdown & Syntax Highlighter.
+- **Polished Feedback**: React Hot Toast & custom animations
 
 ---
 
-## 📥 Getting Started
+## 🚀 Deployment to Render.com
+
+This backend is specially configured to be **Production Ready** for a seamless deployment onto Render.
+
+### Backend Deployment Steps:
+1. Create a new **Web Service** on Render.
+2. Connect this repository.
+3. Set the **Root Directory** to `Backend/` (or run it from the root depending on your monorepo structure, adjusting standard paths).
+4. Configure the Build and Run commands:
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+5. **Environment Variables**: Make sure to add the following in the Render Dashboard:
+   - `PORT`: 8000 (Render automatically provides a PORT, but you can explicitly specify it).
+   - `MONGO_URI`: Your MongoDB connection string.
+   - `JWT_SECRET`: Your secure secret string.
+   - `GEMINI_API_KEY`: A valid Google MakerSuite API key.
+   - `FRONTEND_URL`: URL of your deployed frontend application (sets secure CORS rules).
+
+*Note: The platform features ephemeral storage across deploys. Document uploads (`/uploads`) are stored temporarily on the server unless you've provisioned a persistent Render Disk volume attached to the `/uploads` directory.*
+
+---
+
+## 📥 Getting Started Locally
 
 You will need a minimum of Node `v18.0.0` or higher installed to comfortably run this application.
+
+### 1. Environment Configuration
+
+You'll need `.env` files for both the frontend and backend.
+
+**Backend (`Backend/.env`)**
+```env
+PORT=8000
+MONGO_URI=mongodb://localhost:27017/ai-learning-assistant
+JWT_SECRET=your_super_secret_jwt_string
+GEMINI_API_KEY=your_google_gemini_api_key
+FRONTEND_URL=http://localhost:5173
+```
+
+**Frontend (`frontend/.env`)**
+```env
+VITE_API_URL=http://localhost:8000/api
+```
 
 ### 2. Launching The Application 
 
@@ -67,8 +106,6 @@ npm run dev
 The frontend should be successfully running on `http://localhost:5173`. 
 
 ---
-
-
 
 ## 📄 License & Terms
 

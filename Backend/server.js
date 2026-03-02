@@ -11,7 +11,7 @@ import connectDB from "./config/db.js";
 
 
 import authRoutes from "./routes/authRoutes.js";
-import documentRoutes  from "./routes/documentRoutes.js";
+import documentRoutes from "./routes/documentRoutes.js";
 import flashcardRoutes from "./routes/flashcardRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import quizRoutes from "./routes/quizRoutes.js";
@@ -34,8 +34,8 @@ connectDB();
 // Middleware
 app.use(
     cors({
-        origin: "*",    
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        origin: process.env.FRONTEND_URL || "*",
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
     })
@@ -50,7 +50,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 // Routes
-app.use('/api/auth', authRoutes); 
+app.use('/api/auth', authRoutes);
 app.use('/api/documents',documentRoutes); 
 app.use('/api/flashcard',flashcardRoutes); 
 app.use('/api/aiRoutes',aiRoutes);
@@ -64,7 +64,7 @@ app.use(errorHandler);
 // 404 handler
 app.use((req,res)=>{
     res.status(404).json({success:false,message:"Route not found"});
-})  
+})
 
 // server start 
 const PORT = process.env.PORT || 3000;
