@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from "../../components/context/AuthContext"
 import { LayoutDashboard, FileText, User, BrainCircuit, BookOpen, X, LogOut } from 'lucide-react'
 
+
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const { logout } = useAuth()
   const navigate = useNavigate()
@@ -11,6 +12,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
     logout()
     navigate('/login')
   }
+
+ 
 
   const navLinks = [
     { to: "/dashboard", icon: LayoutDashboard, text: "Dashboard" },
@@ -45,29 +48,33 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
         {/* Navigation */}
         <nav className='flex-1 px-3 py-6 space-y-1.5'>
           {navLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={toggleSidebar}
-                className={({ isActive }) => `group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${isActive ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
-              >
-                {({ isActive }) => (
-                  <>
-                    <link.icon
-                      size={18}
-                      strokeWidth={2.5}
-                      className={`transition-transform duration-200 ${isActive ? '' : 'group-hover:scale-110'}`}
-                    />
-                    {link.text}
-                  </>
-                )}
-              </NavLink>
-            )
+            <NavLink
+              key={link.to}
+              to={link.to}
+              onClick={toggleSidebar}
+              className={({ isActive }) => `group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${isActive ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+            >
+              {({ isActive }) => (
+                <>
+                  <link.icon
+                    size={18}
+                    strokeWidth={2.5}
+                    className={`transition-transform duration-200 ${isActive ? '' : 'group-hover:scale-110'}`}
+                  />
+                  {link.text}
+                </>
+              )}
+            </NavLink>
+          )
           )}
         </nav>
 
-        {/* Logout Section */}
-        <div className="px-3 py-4 border-t border-slate-200/60">
+        {/* Logout Section and Theme Toggle */}
+        <div className="px-3 py-4 border-t border-slate-200/60 flex flex-col gap-2">
+          <div className="flex items-center justify-between px-4 py-2">
+            
+          
+          </div>
           <button
             onClick={handleLogout}
             className="group flex items-center gap-3 w-full px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-red-50 hover:text-red-600

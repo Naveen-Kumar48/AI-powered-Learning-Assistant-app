@@ -12,10 +12,10 @@ router.use(protect);
 
 
 
-router.get("/",getAllFlashcardSets);
-router.get("/:documentId",getFlashcards);
-router.post("/:cardId/review",reviewFlashcard);
-router.put('/:cardId/star',toggleStarFlashcard)
-router.delete("/:id",deleteFlashcardSets)
+router.get("/", getAllFlashcardSets);
+router.get("/document/:documentId", getFlashcards);
+router.post("/:cardId/review", reviewFlashcard);
+router.put('/:cardId/star', toggleStarFlashcard)
+router.delete("/:id", deleteFlashcardSets)
 
 export default router

@@ -9,7 +9,7 @@ import Tabs from "../../components/common/Tabs"
 import ChatInterface from "../../components/chat/ChatInterface"
 import AiActions from "../../components/Ai/AIActions.jsx";
 import FlashcardManager from "../../components/flashcards/FlashcardManager.jsx";
-
+import QuizManager from "../../components/quizzes/QuizManager.jsx";
 
 const DocumentdetailPage = () => {
   const { id } = useParams();
@@ -84,18 +84,18 @@ const DocumentdetailPage = () => {
   };
 
 
-  
+
   const renderChat = () => {
     return <ChatInterface />
   }
   const renderAIActions = () => {
-    return <AiActions/>
+    return <AiActions />
   }
   const renderFlashcardsTab = () => {
-    return <FlashcardManager documentId={id}/>
+    return <FlashcardManager documentId={id} />
   }
   const renderQuizzesTab = () => {
-    return "renderQuizzesTab "
+    return <QuizManager documentId={id} />
   }
 
   const tabs = [

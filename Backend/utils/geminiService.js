@@ -30,14 +30,14 @@ ${text.substring(0, 15000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-flash-latest',
+            model: 'gemini-2.5-flash',
             contents: prompt,
         });
         const generatedText = response.text;
 
         // Parse the response
         const flashcards = [];
-        const cards = generatedText.split(' --- ').filter(c => c.trim());
+        const cards = generatedText.split(/\s*---\s*/).filter(c => c.trim());
 
         for (const card of cards) {
             const lines = card.trim().split('\n');
@@ -77,15 +77,15 @@ ${text.substring(0, 15000)}`;
 */
 export const generateQuiz = async (text, numQuestions = 5) => {
     const prompt = `Generate exactly ${numQuestions} multiple choice questions from the following text.
-Return the output strictly as a JSON array of objects.
-Do not include markdown formatting (like \`\`\`json ... \`\`\`).
-Each object must have the following structure:
+You MUST respond with a valid, raw JSON array of objects and nothing else. Do not use markdown (no \`\`\`json prefix).
+
+Each object inside the array must exactly match this structure:
 {
   "question": "The question text",
   "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
-  "correctAnswer": "The correct option text (must match one of the options exactly)",
-  "explanation": "Brief explanation of why the answer is correct",
-  "difficulty": "easy", "medium", or "hard"
+  "correctAnswer": "The exact string of the correct option",
+  "explanation": "Brief explanation",
+  "difficulty": "medium"
 }
 
 Text:
@@ -93,14 +93,14 @@ ${text.substring(0, 15000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-flash-latest",
+            model: "gemini-2.5-flash",
             contents: prompt,
         });
 
         const generatedText = response.text;
-
-        // Clean up potential markdown formatting if the model disregards the instruction (though JSON mode helps)
         let jsonString = generatedText.trim();
+
+        // Clean up markdown formatting if the model disregards the instruction
         if (jsonString.startsWith('```json')) {
             jsonString = jsonString.replace(/^```json/, '').replace(/```$/, '').trim();
         } else if (jsonString.startsWith('```')) {
@@ -112,7 +112,7 @@ ${text.substring(0, 15000)}`;
         // Validate structure
         const validQuestions = questions.filter(q =>
             q.question &&
-            Array.isArray(q.options) && q.options.length === 4 &&
+            Array.isArray(q.options) && q.options.length > 0 &&
             q.correctAnswer &&
             q.difficulty
         );
@@ -121,7 +121,6 @@ ${text.substring(0, 15000)}`;
 
     } catch (error) {
         console.error('Gemini API error:', error);
-        // Fallback or rethrow
         throw new Error('Failed to generate quiz');
     }
 };
@@ -140,7 +139,7 @@ ${text.substring(0, 20000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-flash-latest',
+            model: 'gemini-2.5-flash',
             contents: prompt,
         });
         const generatedText = response.text;
@@ -172,7 +171,7 @@ Answer:`;
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-flash-latest",
+            model: "gemini-2.5-flash",
             contents: prompt,
         });
 
@@ -200,7 +199,7 @@ ${context.substring(0, 10000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-flash-latest",
+            model: "gemini-2.5-flash",
             contents: prompt,
         });
         const generatedText = response.text;

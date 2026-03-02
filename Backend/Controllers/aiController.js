@@ -5,7 +5,7 @@ import ChatHistory from "../models/ChatHistory.js";
 import * as geminiService from "../utils/geminiService.js";
 import { findRelevantChunks } from "../utils/textChunker.js";
 
-//* desc  General flashcards from document
+//* desc    General flashcards from document
 //* routes  POST/api/ai/generate-flashcards
 //* @access private
 export const generateFlashcards = async (req, res, next) => {

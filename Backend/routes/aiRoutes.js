@@ -7,15 +7,17 @@ import {
   explainConcept,
   getChatHistory,
 } from "../Controllers/aiController.js";
+
 import protect from "../middleware/auth.js";
 const router = express.Router();
+
 router.use(protect);
 
-router.post("/generate-flashcard", generateFlashcards);
-router.post("/generate-quiz", generateQuiz);
-router.post("/generate-summary", generateSummary);
+router.post("/generate-flashcard",generateFlashcards);
+router.post("/generate-quiz",generateQuiz);
+router.post("/generate-summary",generateSummary);
 router.post("/chat",chat);
-router.post("/explain-concept", explainConcept);
-router.get("/chat-history/:documentId", getChatHistory);
+router.post("/explain-concept",explainConcept);
+router.get("/chat-history/:documentId",getChatHistory);
 
 export default router;

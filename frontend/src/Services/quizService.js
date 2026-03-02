@@ -36,6 +36,16 @@ const getQuizResults = async (quizId) => {
         throw error.response?.data || { message: "Failed to fetch quiz results" };
     }
 }
+
+const deleteQuiz = async (quizId) => {
+    try {
+        const response = await axiosInstance.delete(API_PATHS.QUIZZES.DELETE_QUIZ(quizId));
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: "Failed to delete quiz" };
+    }
+}
+
 const quizService = {
     getQuizzesForDocument,
     getQuizById,

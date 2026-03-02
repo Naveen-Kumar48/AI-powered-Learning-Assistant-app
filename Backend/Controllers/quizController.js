@@ -74,13 +74,6 @@ export const submitQuiz = async (req, res, next) => {
         status: 404,
       });
     }
-    if (quiz.completedAt) {
-      return res.status(400).json({
-        success: false,
-        error: "Quiz already  completed ",
-        status : 400,
-      });
-    }
     //*Process answers
     let correctCount = 0;
     const userAnswers = [];
@@ -134,7 +127,7 @@ export const getQuizResults = async (req, res, next) => {
       userId: req.user._id,
     }).populate("documentId", "title");
     if (!quiz) {
-      return res.statusCode(404).json({
+      return res.status(404).json({
         success: false,
         error: "Quiz not found",
         status: 404,
@@ -192,7 +185,7 @@ export const deleteQuiz = async (req, res, next) => {
     });
 
     if (!quiz) {
-      return res.statusCode(404).json({
+      return res.status(404).json({
         success: false,
         error: "Quiz not found",
         statusCode: 404,
