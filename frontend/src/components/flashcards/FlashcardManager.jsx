@@ -177,7 +177,7 @@ const FlashcardManager = ({ documentId }) => {
     const renderFlashcardViewer = () => {
         const curentCard = selectedSet.cards[currentCardIndex];
         return (
-            <div className="p-8 max-w-4xl mx-auto">
+            <div className="p-4 sm:p-6 md:p-8 max-w-4xl mx-auto w-full">
                 {/* Header Navigation */}
                 <div className="mb-6">
                     <button
@@ -192,18 +192,18 @@ const FlashcardManager = ({ documentId }) => {
                 {/* Flashcard Component */}
                 <div
                     onClick={() => setIsFlipped(!isFlipped)}
-                    className="relative w-full aspect-[5/3] sm:aspect-[2/1] mb-8 cursor-pointer group"
+                    className="relative w-full aspect-[4/5] sm:aspect-[4/3] md:aspect-[2/1] mb-8 cursor-pointer group"
                     style={{ perspective: "1000px" }}
                 >
                     <div className={`relative w-full h-full transition-transform duration-500`}
                         style={{ transformStyle: "preserve-3d", transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)" }}>
 
                         {/* Front (Question) */}
-                        <div className="absolute inset-0 w-full h-full bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md flex flex-col items-center justify-center p-8 sm:p-12"
+                        <div className="absolute inset-0 w-full h-full bg-white border border-slate-200 rounded-2xl md:rounded-3xl shadow-sm hover:shadow-md flex flex-col items-center justify-center p-6 sm:p-8 md:p-12"
                             style={{ backfaceVisibility: "hidden" }}>
                             {/* Top Badges */}
-                            <div className="absolute top-6 w-full px-8 flex justify-between items-center">
-                                <div className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase tracking-wider">
+                            <div className="absolute top-4 sm:top-6 w-full px-6 sm:px-8 flex justify-between items-center">
+                                <div className="px-2 sm:px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider">
                                     {curentCard.difficulty || "Medium"}
                                 </div>
                                 <button
@@ -218,25 +218,25 @@ const FlashcardManager = ({ documentId }) => {
                             </div>
 
                             {/* Content */}
-                            <div className="flex-grow flex flex-col items-center justify-center text-center max-w-2xl px-4 mt-8">
-                                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-snug">
+                            <div className="flex-grow flex flex-col items-center justify-center text-center w-full px-2 sm:px-4 mt-8 sm:mt-10 overflow-y-auto">
+                                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 leading-snug">
                                     {curentCard.question}
                                 </h3>
                             </div>
 
                             {/* Bottom Action */}
-                            <div className="absolute bottom-6 flex items-center justify-center text-slate-400 font-medium text-sm group-hover:text-emerald-500 transition-colors">
-                                <RotateCcw className="w-4 h-4 mr-2" />
+                            <div className="absolute bottom-4 sm:bottom-6 flex items-center justify-center text-slate-400 font-medium text-xs sm:text-sm group-hover:text-emerald-500 transition-colors">
+                                <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
                                 Click to reveal answer
                             </div>
                         </div>
 
                         {/* Back (Answer) */}
-                        <div className="absolute inset-0 w-full h-full bg-emerald-50 border border-emerald-200 rounded-3xl shadow-sm hover:shadow-md flex flex-col items-center justify-center p-8 sm:p-12"
+                        <div className="absolute inset-0 w-full h-full bg-emerald-50 border border-emerald-200 rounded-2xl md:rounded-3xl shadow-sm hover:shadow-md flex flex-col items-center justify-center p-6 sm:p-8 md:p-12"
                             style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
                             {/* Top Badges */}
-                            <div className="absolute top-6 w-full px-8 flex justify-between items-center">
-                                <div className="px-3 py-1 bg-emerald-100/50 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-bold uppercase tracking-wider">
+                            <div className="absolute top-4 sm:top-6 w-full px-6 sm:px-8 flex justify-between items-center">
+                                <div className="px-2 sm:px-3 py-1 bg-emerald-100/50 text-emerald-700 border border-emerald-200 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider">
                                     {curentCard.difficulty || "Medium"}
                                 </div>
                                 <button
@@ -251,15 +251,15 @@ const FlashcardManager = ({ documentId }) => {
                             </div>
 
                             {/* Content */}
-                            <div className="flex-grow flex flex-col items-center justify-center text-center max-w-2xl px-4 mt-8">
-                                <h3 className="text-xl sm:text-2xl font-medium text-emerald-900 leading-relaxed mb-4">
+                            <div className="flex-grow flex flex-col items-center justify-center text-center w-full px-2 sm:px-4 mt-8 sm:mt-10 overflow-y-auto">
+                                <h3 className="text-lg sm:text-xl md:text-2xl font-medium text-emerald-900 leading-relaxed mb-4">
                                     {curentCard.answer}
                                 </h3>
                             </div>
 
                             {/* Bottom Action */}
-                            <div className="absolute bottom-6 flex items-center justify-center text-emerald-600/70 font-medium text-sm transition-colors">
-                                <RotateCcw className="w-4 h-4 mr-2" />
+                            <div className="absolute bottom-4 sm:bottom-6 flex items-center justify-center text-emerald-600/70 font-medium text-xs sm:text-sm transition-colors">
+                                <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
                                 Click to see question
                             </div>
                         </div>
@@ -267,25 +267,25 @@ const FlashcardManager = ({ documentId }) => {
                 </div>
 
                 {/* Bottom Navigation */}
-                <div className="flex items-center justify-center gap-6">
+                <div className="flex items-center justify-between sm:justify-center gap-2 sm:gap-6 mt-4">
                     <button
                         onClick={handlePrevCard}
                         disabled={currentCardIndex === 0}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold text-sm sm:text-base hover:bg-slate-50 hover:border-slate-300 transition-all disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200"
                     >
-                        <ChevronLeft className="w-4 h-4" /> Previous
+                        <ChevronLeft className="w-4 h-4" /> <span className="hidden xs:inline">Previous</span>
                     </button>
 
-                    <div className="px-5 py-2.5 rounded-xl bg-slate-100/50 border border-slate-200 font-bold text-slate-600 text-sm min-w-[5rem] text-center">
+                    <div className="px-4 py-2.5 rounded-xl bg-slate-100/50 border border-slate-200 font-bold text-slate-600 text-xs sm:text-sm min-w-[4rem] sm:min-w-[5rem] text-center whitespace-nowrap">
                         {currentCardIndex + 1} / {selectedSet.cards.length}
                     </div>
 
                     <button
                         onClick={handleNextCard}
                         disabled={currentCardIndex === selectedSet.cards.length - 1}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold text-sm sm:text-base hover:bg-slate-50 hover:border-slate-300 transition-all disabled:opacity-40 disabled:hover:bg-white disabled:hover:border-slate-200"
                     >
-                        Next <ChevronRight className="w-4 h-4" />
+                        <span className="hidden xs:inline">Next</span> <ChevronRight className="w-4 h-4" />
                     </button>
                 </div>
             </div>
