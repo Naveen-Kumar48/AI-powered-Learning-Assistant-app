@@ -50,14 +50,6 @@ This backend is specially configured to be **Production Ready** for a seamless d
 4. Configure the Build and Run commands:
    - **Build Command**: `npm install`
    - **Start Command**: `npm start`
-5. **Environment Variables**: Make sure to add the following in the Render Dashboard:
-   - `PORT`: 8000 (Render automatically provides a PORT, but you can explicitly specify it).
-   - `MONGO_URI`: Your MongoDB connection string.
-   - `JWT_SECRET`: Your secure secret string.
-   - `GEMINI_API_KEY`: A valid Google MakerSuite API key.
-   - `FRONTEND_URL`: URL of your deployed frontend application (sets secure CORS rules).
-
-*Note: The platform features ephemeral storage across deploys. Document uploads (`/uploads`) are stored temporarily on the server unless you've provisioned a persistent Render Disk volume attached to the `/uploads` directory.*
 
 ---
 
