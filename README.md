@@ -1,84 +1,75 @@
-# AI Powered Learning Assistant App
+<div align="center">
+  <img src="https://img.shields.io/badge/MERN-Stack-blue?style=for-the-badge&logo=mongodb" alt="MERN Stack">
+  <img src="https://img.shields.io/badge/Gemini-AI-orange?style=for-the-badge&logo=google" alt="Google GenAI">
+  <img src="https://img.shields.io/badge/React-18-cyan?style=for-the-badge&logo=react" alt="React">
+  
+  # 🧠 AI-Powered Learning Assistant App
+  
+  *A robust, intelligent full-stack web application designed to supercharge your learning and study experiences by leveraging advanced AI for document processing, summarization, flashcards, and quizzes.*
+</div>
 
-A robust full-stack web application designed to enhance learning experiences using Artificial Intelligence. Built with the MERN stack (MongoDB, Express, React, Node.js) and powered by modern tools like Vite and Tailwind CSS.
+---
 
-## 🚀 Features
+## ✨ Features
 
-- **User Authentication**: Secure Login, Registration, and Profile management using JWT.
-- **AI Integration**: Leveraging Google's GenAI (Gemini) for intelligent assistance.
-- **Modern UI/UX**: Responsive and sleek design built with React and Tailwind CSS.
-- **Document Processing**: Capability to handle and parse PDF documents.
-- **File Uploads**: Support for file uploads via Multer.
+- **🛡️ Secure Authentication**: Full user signup and login flow protected by JWT and hashed passwords.
+- **📄 Smart Document Processing**: Upload your PDF documents and extract their text smoothly across scalable storage.
+- **🤖 Deep AI Integrations**: Seamlessly integrated with Google's GenAI (Gemini) API to give you context-aware insights.
+- **💬 Chat with Document**: Built-in interactive chat to ask direct questions to your document.
+- **📚 Interactive Study Sets**: Auto-generate robust Flashcards and multiple-choice Quizzes straight from your reading material.
+- **🎨 Premium UI/UX**: Designed to look stunning on every platform using React, standard Tailwind CSS, and Lucide Icons.
 
-## 🛠️ Tech Stack
+---
 
-### Backend
-- **Runtime**: Node.js & Express.js
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JSON Web Tokens (JWT) & bcryptjs
-- **AI**: @google/genai
-- **Utilities**: Multer, PDF-parse, Dotenv, Cors
+## 🛠️ Architecture & Tech Stack
 
-### Frontend
-- **Framework**: React.js (powered by Vite)
-- **Styling**: Tailwind CSS
-- **Routing**: React Router DOM
-- **HTTP Client**: Axios
-- **Icons**: Lucide React
-- **Notifications**: React Hot Toast
-- **Markdown**: React Markdown & Syntax Highlighter
+**Backend System**
+- **Core Framework**: Node.js & Express.js
+- **Database**: MongoDB (Local/Atlas) managed with Mongoose ODM
+- **Security**: JWT tokens, bcrypt.js for passwords
+- **Intelligence Core**: `@google/genai` sdk
+- **File & Extraction Handling**: Multer, PDF-Parse, and custom logical chunking
 
-## 📦 Getting Started
+**Frontend Experience**
+- **Core Engine**: React.js driven by Vite tooling
+- **Routing**: `react-router-dom` v6
+- **State & Data Fetching**: Axios customized instances
+- **CSS Architecture**: Tailwind CSS
+- **Polished Feedback**: React Hot Toast
+- **Data Rendering**: Beautiful markdown parsed from AI streams using React Markdown & Syntax Highlighter.
 
-Follow these steps to set up the project locally.
+---
 
-### Prerequisites
-- Node.js (v18+ recommended)
-- npm or yarn
-- MongoDB (Database connection string)
+## 📥 Getting Started
 
-### Installation
+You will need a minimum of Node `v18.0.0` or higher installed to comfortably run this application.
 
-1.  **Clone the repository**
-    ```bash
-    git clone <repository-url>
-    ```
+### 2. Launching The Application 
 
-2.  **Backend Setup**
-    Navigate to the backend directory and install dependencies:
-    ```bash
-    cd Backend
-    npm install
-    ```
+Open two separate terminals and start your services.
 
-    
+**Terminal 1 (Backend Initialization)**
+```bash
+git clone <repository-url>
+cd Backend
+npm install
+npm run dev
+```
 
-    Start the backend server:
-    ```bash
-    npm run dev
-    ```
+**Terminal 2 (Frontend Initialization)**
+```bash
+# Assuming you cloned it beside 'Backend'
+cd frontend
+npm install
+npm run dev
+```
 
-3.  **Frontend Setup**
-    Navigate to the frontend directory and install dependencies:
-    ```bash
-    cd ../frontend
-    npm install
-    ```
+The frontend should be successfully running on `http://localhost:5173`. 
 
-    Start the frontend development server:
-    ```bash
-    npm run dev
-    ```
+---
 
-## 🔌 API Endpoints
 
-### Authentication
-- `POST /api/auth/register` - Create a new account
-- `POST /api/auth/login` - Login to existing account
-- `GET /api/auth/profile` - Get current user profile (Protected)
-- `PUT /api/auth/update-profile` - Update user details (Protected)
-- `POST /api/auth/change-password` - Change user password (Protected)
 
-## 📄 License
+## 📄 License & Terms
 
-This project is licensed under the ISC License.
+Licensed securely underneath the **ISC** framework structure. Feel confident to study, observe, and extend this codebase!
