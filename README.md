@@ -85,9 +85,36 @@ Create `.env` files in both the `Backend/` and `frontend/` directories with the 
 
 **Prerequisites:** Node.js >= v18.0.0
 
-## 📄 License
+## 📄 License & Usage Terms
 
-This project is distributed under the **ISC License**, permitting use, modification, and distribution for both commercial and non-commercial purposes with appropriate attribution.
+**Copyright © 2026 Naveen Kumar. All Rights Reserved.**
+
+This project is distributed under the **ISC License** with the following additional terms:
+
+### Permissions Granted
+- ✅ **Commercial Use** - Free to use for commercial purposes
+- ✅ **Modification** - Allowed to modify and adapt the code
+- ✅ **Distribution** - Can share and distribute the software
+- ✅ **Private Use** - Free for personal and educational projects
+
+### Conditions & Requirements
+- ⚠️ **Attribution Required** - Any copy or substantial portion of this software must include appropriate credit to the original author with a link to the source repository
+- ⚠️ **License Notice** - The original copyright notice and this permission notice shall be included in all copies or substantial portions of the Software
+- ⚠️ **No Misrepresentation** - Modified versions must be clearly marked as such and not misrepresented as the original software
+- ⚠️ **Academic Integrity** - If used in academic settings, proper citation and acknowledgment must be provided
+### Proper Attribution Format
+When using this project, please include the following attribution:
+```
+AI-Powered Learning Assistant [https://github.com/yourusername/ai-learning-assistant] 
+Copyright (c) [2026] [Naveen Kumar], Licensed under the ISC License
+```
+
+### Limitations
+- ❌ **No Liability** - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND
+- ❌ **No Endorsement** - Use of this project does not imply endorsement by the original author
+
+### For Commercial Licensing
+If you require different licensing terms or wish to use this project without attribution requirements, please contact the author for commercial licensing options.
 
 ---
 
