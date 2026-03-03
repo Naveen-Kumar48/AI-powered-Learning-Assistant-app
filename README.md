@@ -55,9 +55,6 @@ Built on modern full-stack architecture, the platform combines a robust Express/
 ## 🚀 Deployment Guide
 
 ### Backend Deployment (Render.com)
-
-The backend service is configured for deployment on [Render.com](https://render.com/).
-
 1. Create a new **Web Service** linked to your repository
 2. Configure the following settings:
    - **Root Directory:** `Backend/`
@@ -87,25 +84,6 @@ Create `.env` files in both the `Backend/` and `frontend/` directories with the 
 ### 2. Installation & Bootstrapping
 
 **Prerequisites:** Node.js >= v18.0.0
-
-Open two terminal sessions to run both servers simultaneously.
-
-**Terminal 1: Start the Backend Server**
-```bash
-git clone <repository-url>
-cd Backend
-npm install
-npm run dev
-```
-
-**Terminal 2: Start the Frontend Server**
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The application will be available at the URLs displayed in your terminal outputs (typically `http://localhost:5173` for frontend and `http://localhost:5000` for backend).
 
 ## 📄 License
 
