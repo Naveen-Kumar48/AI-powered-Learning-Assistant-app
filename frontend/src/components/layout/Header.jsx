@@ -2,24 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from "../../components/context/AuthContext"
 
 import { Bell, User, Menu } from "lucide-react"
-import Switch from '../common/NightModeButton'
-
 const Header = ({ toggleSidebar }) => {
   const { user } = useAuth()
 
-  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('theme') === 'dark')
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
-    }
-  }, [isDarkMode])
-
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode)
  
 
 
@@ -36,7 +21,7 @@ const Header = ({ toggleSidebar }) => {
     </div>
 
     <div className="flex items-center gap-3">
-      <Switch isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      {/* <Switch isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} /> */}
 
       <button className="inline-flex items-center justify-center w-10 h-10 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all duration-200 group">
         <div className="relative">
