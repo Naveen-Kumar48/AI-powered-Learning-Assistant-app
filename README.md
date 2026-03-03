@@ -8,83 +8,89 @@
   
   # 🧠 AI-Powered Learning Assistant
 
-  *A comprehensive, full-stack educational tool that leverages Generative AI to automate study material creation.*
+  **An intelligent full-stack educational platform that leverages Generative AI to automate study material creation**
 </div>
 
 ---
 
 ## 📖 Overview
 
-The **AI-Powered Learning Assistant** is an intelligent web application designed to accelerate the learning process. By uploading standard PDF materials, students and professionals can automatically generate study artifacts—including interactive flashcards, comprehensive quizzes, and executive summaries. Additionally, the platform provides a contextual chatbot capable of parsing and discussing the ingested document data in real-time.
+The **AI-Powered Learning Assistant** is an advanced educational web application designed to transform how students and professionals engage with learning materials. By uploading standard PDF documents, users can automatically generate comprehensive study aids—including interactive flashcards, multiple-choice quizzes, executive summaries, and contextual AI-powered discussions based on their uploaded content.
 
-Built adhering to modern full-stack methodologies, the architecture seamlessly meshes a robust Express/Node.js backend with an accessible, high-performance React frontend.
+Built on modern full-stack architecture, the platform combines a robust Express/Node.js backend with a high-performance React frontend, delivering seamless user experience and powerful AI-driven functionality.
 
 ---
 
 ## ✨ Core Features
 
-- **RBAC Authentication:** Secure, JWT-based user session management with bcrypt-encrypted credentials.
-- **Automated Ingestion Pipeline:** A robust PDF handling mechanism that extracts, chunks, and securely stores raw document vectors and metadata.
-- **Context-Aware AI Integrations:** Deep integration with Google's GenAI (Gemini 2.5 Flash SDK) framework for highly accurate content synthesis.
-- **Real-Time Document Querying:** An interactive contextual chat interface allowing users to dynamically interrogate their uploaded material.
-- **Dynamic Study Artifact Generation:** On-the-fly computational synthesis of Flashcards and Multiple-Choice Quizzes driven by document text.
-- **State-of-the-Art UX/UI:** An aesthetically tuned interface engineered with React, Tailwind CSS, Lucide Icons, and modern glass-morphism methodologies.
+- **Role-Based Access Control (RBAC):** Secure JWT-based authentication with bcrypt-encrypted credentials
+- **Automated Document Processing:** Intelligent PDF ingestion pipeline with text extraction, chunking, and vector storage
+- **Advanced AI Integration:** Google's Gemini 2.5 Flash SDK for accurate content synthesis and generation
+- **Real-Time Document Querying:** Interactive chat interface for dynamic document analysis and Q&A
+- **Dynamic Study Material Generation:** AI-powered creation of flashcards, quizzes, and summaries from uploaded documents
+- **Modern User Experience:** Clean, responsive UI built with React, Tailwind CSS, Lucide icons, and glass-morphism design principles
 
 ---
 
 ## 🛠️ Architecture & Technologies
 
 ### Backend Infrastructure
-- **Runtime Environment:** Node.js (v18+)
-- **API Architecture:** Express.js RESTful principles
-- **Data Persistence:** MongoDB & Mongoose ODM
-- **Security Protocols:** JSON Web Tokens (JWT)
-- **Large Language Model (LLM):** `@google/genai` sdk
-- **File System Handling:** Multer & PDF-Parse
+- **Runtime:** Node.js (v18+)
+- **Framework:** Express.js RESTful API
+- **Database:** MongoDB with Mongoose ODM
+- **Authentication:** JSON Web Tokens (JWT)
+- **AI Engine:** Google Generative AI (`@google/genai`)
+- **File Processing:** Multer and PDF-Parse libraries
 
 ### Frontend Implementation
-- **Core View Library:** React.js (Vite Build System)
+- **Framework:** React.js (Vite build system)
 - **State Management:** React Context API
-- **HTTP Client:** Axios (Interceptors configured for JWTs)
-- **Styling Paradigm:** Tailwind CSS
+- **HTTP Client:** Axios with JWT interceptors
+- **Styling:** Tailwind CSS utility framework
 - **Routing:** React Router v6
+- **UI Components:** Custom components with glass-morphism effects
 
 ---
 
-## 🚀 Production Deployment
+## 🚀 Deployment Guide
 
-### Backend Server (Node.js/Express via Render)
-The backend service is intrinsically structured for automated deployment on [Render.com](https://render.com/).
+### Backend Deployment (Render.com)
 
-1. Initialize a new **Web Service** mapped to this repository.
-2. Configure your execution paths:
+The backend service is configured for deployment on [Render.com](https://render.com/).
+
+1. Create a new **Web Service** linked to your repository
+2. Configure the following settings:
    - **Root Directory:** `Backend/`
    - **Build Command:** `npm install`
-   - **Start Command:** `npm start` *(or `npm run prod`)*
-3. **Environment Map:** ensure your platform variables accurately map to the ones listed under *Local Initialization*.
+   - **Start Command:** `npm start` or `npm run dev`
+3. Set up environment variables matching those in your local `.env` file
 
-### Frontend Application (React/Vite via Vercel)
-The frontend encapsulates a tailored `vercel.json` directive to optimally resolve SPA routing hooks on edge networks.
+### Frontend Deployment (Vercel)
 
-1. Import the repository into your **Vercel Dashboard**.
-2. Configure settings:
+The frontend includes a tailored `vercel.json` configuration for optimal SPA routing on edge networks.
+
+1. Import your repository into the **Vercel Dashboard**
+2. Configure the following settings:
    - **Framework Preset:** Vite
    - **Root Directory:** `frontend/`
    - **Build Command:** `npm run build`
-3. Map the `VITE_API_URL` environment variable to your deployed Render URL suffixing `/api`.
+3. Set the `VITE_API_URL` environment variable to your deployed Render backend URL (append `/api`)
 
 ---
 
-## 📥 Local Environment Setup
+## 📥 Local Development Setup
 
-### 1. Environment Variable Configuration
-Create `.env` files in both the frontend and backend root directories mirroring the configurations below.
+### 1. Environment Configuration
 
+Create `.env` files in both the `Backend/` and `frontend/` directories with the required environment variables as specified in the example configurations.
 
-### 2. Initialization & Bootstrapping
-Requires Node.js `>=v18.0.0`. Execute from your terminal multiplexer or dual CLI sessions.
+### 2. Installation & Bootstrapping
 
-**Terminal 1: Spin up the API Server**
+**Prerequisites:** Node.js >= v18.0.0
+
+Open two terminal sessions to run both servers simultaneously.
+
+**Terminal 1: Start the Backend Server**
 ```bash
 git clone <repository-url>
 cd Backend
@@ -92,13 +98,21 @@ npm install
 npm run dev
 ```
 
-**Terminal 2: Spin up the Local Dev Server**
+**Terminal 2: Start the Frontend Server**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-## 📄 Licensing
+The application will be available at the URLs displayed in your terminal outputs (typically `http://localhost:5173` for frontend and `http://localhost:5000` for backend).
 
-Distributed underneath the **ISC** License structure. Open for architectural review, forks, and scholarly observation.
+## 📄 License
+
+This project is distributed under the **ISC License**, permitting use, modification, and distribution for both commercial and non-commercial purposes with appropriate attribution.
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ using the MERN Stack and Google Generative AI</sub>
+</div>
