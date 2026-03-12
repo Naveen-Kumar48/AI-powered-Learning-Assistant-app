@@ -17,7 +17,7 @@
 
 The **AI-Powered Learning Assistant** is an advanced educational web application designed to transform how students and professionals engage with learning materials. By uploading standard PDF documents, users can automatically generate comprehensive study aids—including interactive flashcards, multiple-choice quizzes, executive summaries, and contextual AI-powered discussions based on their uploaded content.
 
-Built on modern full-stack architecture, the platform combines a robust Express/Node.js backend with a high-performance React frontend, delivering seamless user experience and powerful AI-driven functionality.
+Built on modern full-stack architecture, the platform combines a robust Express/Node.js backend with a high-performance React frontend, delivering a seamless user experience and powerful AI-driven functionality.
 
 ---
 
