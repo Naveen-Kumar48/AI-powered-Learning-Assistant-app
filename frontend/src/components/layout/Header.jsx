@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useEffect } from 'react'
 import { useAuth } from "../../components/context/AuthContext"
 
 import { Bell, User, Menu } from "lucide-react"
@@ -16,6 +16,7 @@ const Header = ({ toggleSidebar }) => {
         className="md:hidden inline-flex items-center justify-center w-10 h-10 text-slate-900 hover:bg-slate-100 rounded-xl transition-all duration-200"
         aria-label="Toggle sidebar">
         <Menu size={24} />
+        {/* comment */}
       </button>
       <div className='hidden md:block'></div>
     </div>
