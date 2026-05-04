@@ -121,12 +121,7 @@ Screenshots
 <img width="1919" height="929" alt="Screenshot 2026-04-25 122747" src="https://github.com/user-attachments/assets/a2d168b2-ac3e-40c7-9cf5-b0caf16c9d8b" />
 <img width="1919" height="930" alt="Screenshot 2026-04-25 122805" src="https://github.com/user-attachments/assets/9a819ea5-4bc1-47a0-99d2-b3e3dd3d0aa6" />
 
-
-
-
-
-
----
+-----
 
 <div align="center">
   <sub>Built with ❤️ using the MERN Stack and Google Generative AI</sub>
